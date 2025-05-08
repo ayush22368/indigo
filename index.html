@@ -3,441 +3,434 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Indigo Career Finder</title>
-
+    <title>Career Opportunities</title>
     <style>
         body {
             font-family: Arial, sans-serif;
-            line-height: 1.6;
             margin: 0;
             padding: 0;
             background-color: #f4f4f4;
             color: #333;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            min-height: 100vh;
         }
-        header {
-            background: #35424a;
-            color: #ffffff;
-            padding: 1rem 0;
-            text-align: center;
-        }
-        header h1 {
-            margin: 0;
-        }
-        main {
-            padding: 20px;
-            max-width: 960px;
-            margin: auto;
-        }
-        #job-listings-container h2 {
-            text-align: center;
-            margin-bottom: 20px;
-        }
-        .job-card {
-            background: #fff;
-            border: 1px solid #ddd;
-            margin-bottom: 20px;
-            padding: 15px;
-            border-radius: 5px;
-            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
-        }
-        .job-card h3 {
-            margin-top: 0;
-            color: #35424a;
-        }
-        .job-card p {
-            font-size: 0.9em;
-            margin-bottom: 10px;
-        }
-        .action-btn, .apply-btn {
-            display: inline-block;
-            background: #5cb85c;
-            color: white;
-            padding: 8px 15px;
-            text-decoration: none;
-            border: none;
-            border-radius: 4px;
-            cursor: pointer;
-            transition: background-color 0.3s ease;
-            text-align: center;
-        }
-        .action-btn:hover, .apply-btn:hover {
-            background: #4cae4c;
-        }
-        .whatsapp-btn {
-            background: #25D366; /* WhatsApp Green */
-        }
-        .whatsapp-btn:hover {
-            background: #1DAE50;
-        }
-        .modal {
-            display: none;
-            position: fixed;
-            z-index: 1000;
-            left: 0;
-            top: 0;
+
+        .page {
+            display: none; /* Hidden by default */
             width: 100%;
-            height: 100%;
-            overflow: auto;
-            background-color: rgba(0,0,0,0.5);
-        }
-        .modal-content {
-            background-color: #fefefe;
-            margin: 10% auto;
-            padding: 25px;
-            border: 1px solid #888;
-            width: 80%;
-            max-width: 500px;
+            max-width: 600px;
+            background-color: #fff;
+            margin: 20px;
+            padding: 20px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
             border-radius: 8px;
-            position: relative;
-            box-shadow: 0 5px 15px rgba(0,0,0,0.3);
         }
-        .close-btn {
-            color: #aaa;
-            float: right;
-            font-size: 28px;
-            font-weight: bold;
+
+        .page.active {
+            display: block;
         }
-        .close-btn:hover,
-        .close-btn:focus {
-            color: black;
-            text-decoration: none;
-            cursor: pointer;
+
+        h1, h2, h3 {
+            color: #333;
+            text-align: center;
         }
-        #applicationForm div, #whatsAppPromptSection div {
+
+        .form-group {
             margin-bottom: 15px;
         }
-        #applicationForm label, #whatsAppPromptSection label {
+
+        label {
             display: block;
             margin-bottom: 5px;
             font-weight: bold;
         }
-        #applicationForm input[type="email"],
-        #applicationForm input[type="tel"] {
+
+        input[type="email"],
+        input[type="password"],
+        input[type="text"],
+        input[type="file"] {
             width: calc(100% - 22px);
             padding: 10px;
             border: 1px solid #ddd;
             border-radius: 4px;
             box-sizing: border-box;
         }
-        #applicationForm small {
-            font-size: 0.8em;
-            color: #666;
+
+        .password-wrapper {
+            position: relative;
+            display: flex; /* To align input and button */
         }
-        #applicationForm button[type="submit"], #whatsAppPromptSection button {
-            background: #35424a;
+
+        .password-wrapper input[type="password"],
+        .password-wrapper input[type="text"] {
+            flex-grow: 1; /* Input takes available space */
+            border-top-right-radius: 0;
+            border-bottom-right-radius: 0;
+        }
+
+        .show-password-btn {
+            padding: 10px;
+            background-color: #007bff; /* Matching blue for show button */
             color: white;
-            padding: 10px 20px;
+            border: 1px solid #007bff;
+            border-left: none; /* Remove left border where it meets input */
+            border-top-right-radius: 4px;
+            border-bottom-right-radius: 4px;
+            cursor: pointer;
+            font-size: 0.9em;
+            white-space: nowrap; /* Prevent "Show" text from wrapping */
+        }
+         .show-password-btn:hover {
+            background-color: #0056b3;
+            border-color: #0056b3;
+        }
+
+
+        button, .btn-link {
+            display: block;
+            width: 100%;
+            padding: 12px;
+            background-color: #007bff;
+            color: white;
             border: none;
             border-radius: 4px;
             cursor: pointer;
             font-size: 1em;
-            width: 100%;
-        }
-        #applicationForm button[type="submit"]:hover, #whatsAppPromptSection button:hover {
-            background: #2a3338;
-        }
-        #applicationForm button[type="submit"]:disabled {
-            background: #ccc;
-            cursor: not-allowed;
-        }
-        .qr-section {
-            margin-top: 20px;
-            padding: 10px;
-            border: 1px dashed #ccc;
             text-align: center;
+            text-decoration: none;
+            margin-top: 10px;
         }
-        .form-message, #whatsAppPromptSection p {
-            margin-top: 15px;
-            padding: 10px;
-            border-radius: 4px;
+
+        button:hover, .btn-link:hover {
+            background-color: #0056b3;
+        }
+
+        .forgot-password {
+            display: block;
             text-align: center;
+            margin-top: 10px;
+            color: #007bff;
+            text-decoration: none;
+            font-size: 0.9em;
         }
-        .form-message.success {
-            background-color: #d4edda;
-            color: #155724;
-            border: 1px solid #c3e6cb;
+
+        .intro-text p {
+            line-height: 1.6;
+            margin-bottom: 10px;
         }
-        .form-message.error {
-            background-color: #f8d7da;
-            color: #721c24;
-            border: 1px solid #f5c6cb;
+
+        .file-upload-section {
+            border: 1px solid #eee;
+            padding: 15px;
+            margin-bottom: 20px;
+            border-radius: 5px;
         }
-        #whatsAppPromptSection {
-            padding-top: 15px;
+
+        .file-upload-section h3 {
+            margin-top: 0;
+            font-size: 1.2em;
+            border-bottom: 1px solid #eee;
+            padding-bottom: 5px;
+            margin-bottom: 10px;
             text-align: left;
         }
-        #whatsAppPromptSection h4 {
-            text-align: center;
-            color: #35424a;
-        }
-        #whatsAppPromptSection code {
-            background-color: #e9e9e9;
-            padding: 2px 5px;
+
+        .file-preview {
+            font-size: 0.9em;
+            color: #555;
+            margin-top: 5px;
+            padding: 8px;
+            background-color: #f9f9f9;
+            border: 1px dashed #ddd;
             border-radius: 3px;
-            font-family: monospace;
         }
-        #whatsAppPromptSection ol li {
-            margin-bottom: 5px;
+
+        .action-buttons-group {
+            display: flex;
+            gap: 10px; /* Space between buttons */
+            margin-top: 20px;
         }
-        footer {
+
+        .action-buttons-group button {
+            flex: 1; /* Make buttons share space equally */
+        }
+        
+        .navigation-section button {
+            background-color: #6c757d; /* Grey for navigation buttons */
+        }
+        .navigation-section button:hover {
+            background-color: #5a6268;
+        }
+
+        .top-nav {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding-bottom: 15px;
+            border-bottom: 1px solid #eee;
+            margin-bottom: 20px;
+        }
+        .top-nav a, .top-nav span {
+            color: #007bff;
+            text-decoration: none;
+            font-size: 0.9em;
+        }
+
+        #qrCodeImage {
+            display: block;
+            margin: 20px auto;
+            max-width: 250px;
+            border: 1px solid #ccc;
+        }
+        .whatsapp-note {
             text-align: center;
-            padding: 20px;
-            background: #35424a;
-            color: white;
-            margin-top: 30px;
+            margin-top: 15px;
+            font-weight: bold;
+            color: #28a745;
+        }
+        .error-message {
+            color: red;
+            font-size: 0.9em;
+            margin-top: 5px;
+            text-align: center;
         }
     </style>
-
-    <!-- jsPDF Library -->
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
 </head>
 <body>
-    <header>
-        <h1>Indigo Career Finder</h1>
-    </header>
 
-    <main>
-        <section id="job-listings-container">
-            <h2>Available Positions</h2>
-            <!-- Job cards will be injected here by JavaScript -->
-        </section>
-    </main>
+    <!-- Page 1: Sign In -->
+    <div id="signInPage" class="page active">
+        <h1>Career Opportunities: Sign In</h1>
+        <p>Already have an account?</p>
+        <p>Enter your email address and password (Credentials are case sensitive).</p>
+        <p style="color: red;">*indicates a required field.</p>
 
-    <!-- Application Modal -->
-    <div id="applicationModal" class="modal">
-        <div class="modal-content">
-            <span class="close-btn" id="closeModalBtn">×</span>
-            <h3 id="modalJobTitle">Apply for Job</h3>
-
-            <form id="applicationForm">
-                <input type="hidden" id="appliedJobTitle" name="job_title">
-                <div>
-                    <label for="email">Email Address:</label>
-                    <input type="email" id="email" name="user_email" required>
-                </div>
-                <div>
-                    <label for="phone">Phone Number (India):</label>
-                    <input type="tel" id="phone" name="user_phone" pattern="[6-9]\d{9}" title="Enter a 10-digit Indian mobile number starting with 6, 7, 8, or 9" required>
-                    <small>Format: 9876543210 (10 digits)</small>
-                </div>
-                <div class="qr-section">
-                    <p>Scan QR to complete payment. You will be asked to send the screenshot via WhatsApp later.</p>
-                    <img src="qr.png" alt="Payment QR Code" style="width:150px; height:150px;">
-                </div>
-                <button type="submit" id="submitApplicationBtn">Generate & Download Application PDF</button>
-            </form>
-            <div id="whatsAppPromptSection" style="display: none;">
-                <!-- Content will be injected by JavaScript -->
+        <form id="signInForm" onsubmit="return false;"> <!-- onsubmit="return false;" to prevent default form submission -->
+            <div class="form-group">
+                <label for="email">Email Address:*</label>
+                <input type="email" id="email" name="email" value="xwhite074@gmail.com" required>
             </div>
-            <p id="formMessage" class="form-message"></p>
-        </div>
+            <div class="form-group">
+                <label for="password">Password:*</label>
+                <div class="password-wrapper">
+                    <input type="password" id="password" name="password" required>
+                    <button type="button" class="show-password-btn" onclick="togglePasswordVisibility()">Show</button>
+                </div>
+            </div>
+            <div id="signInError" class="error-message" style="display:none;"></div>
+            <button type="button" onclick="handleSignIn()">Sign In</button>
+            <a href="#" class="forgot-password">Forgot your password?</a>
+        </form>
     </div>
 
-    <footer>
-        <p>© 2023-2024 Indigo Career Solutions</p>
-    </footer>
+    <!-- Page 2: Intro / "Privacy Policy" -->
+    <div id="introPage" class="page">
+        <div class="top-nav">
+            <a href="#" onclick="navigateToPage('signInPage')">Sign Out</a>
+            <span>Options ▾</span>
+            <span>English UK (English UK) ▾</span>
+        </div>
+        <h2>Consultant-Transport (6710)</h2>
+        <div class="intro-text">
+            <p>Dear candidate,</p>
+            <p>Thank you for your interest in our company.</p>
+            <p>In this section you have the possibility to add more details about your profile. Please be aware that if you have applied to a specific opening the information you provide here is available to the reviewers of your application.</p>
+            <p>If you do not find any specific open position now or if you would also be interested in other positions you can fill in (or complete) your profile and save it thus making it available to our recruiters who may contact you in case there is a match to a vacancy with your profile and preferences.</p>
+            <p>Please note that by filling/completing your profile below you hereby agree that your data is available to the recruiters worldwide.</p>
+            <p>Your Recruiting Team</p>
+        </div>
+        <button type="button" onclick="navigateToPage('documentsPage')">Agree & Continue to Profile</button>
+    </div>
+
+    <!-- Page 3, 4, 5: Form Filling (Combined for simplicity here) -->
+    <div id="documentsPage" class="page">
+        <h2>My Profile / Documents</h2>
+        <p>Accepted file types: DOCX, PDF, Image and Text (MSG, PPT and XLS file types are not accepted for CVs or cover letters)</p>
+
+        <div class="file-upload-section">
+            <h3>My Documents</h3>
+            <div class="form-group">
+                <label for="resumeCv">* Resume/CV</label>
+                <input type="file" id="resumeCv" name="resumeCv" accept=".docx,.pdf,.jpg,.jpeg,.png,.txt" onchange="showFileName('resumeCv', 'resumeCvPreview')">
+                <div id="resumeCvPreview" class="file-preview">e.g., Copy of White and Violet Simple Clean Corporate CV Resume.pdf.pdf</div>
+            </div>
+            <div class="form-group">
+                <label for="coverLetter">Cover Letter</label>
+                <input type="file" id="coverLetter" name="coverLetter" accept=".docx,.pdf,.jpg,.jpeg,.png,.txt" onchange="showFileName('coverLetter', 'coverLetterPreview')">
+                <div id="coverLetterPreview" class="file-preview">e.g., CoverLetter.pdf</div>
+            </div>
+            <div class="form-group">
+                <label for="additionalDocs">Additional Documents</label>
+                <input type="file" id="additionalDocs" name="additionalDocs" multiple onchange="showFileName('additionalDocs', 'additionalDocsPreview')">
+                <div id="additionalDocsPreview" class="file-preview">Add a Document</div>
+            </div>
+        </div>
+
+        <div class="file-upload-section">
+            <h3>PAN Card</h3>
+            <div class="form-group">
+                <label for="panCard1">PAN Document 1</label>
+                <input type="file" id="panCard1" name="panCard1" accept=".jpg,.jpeg,.png,.pdf" onchange="showFileName('panCard1', 'panCard1Preview')">
+                <div id="panCard1Preview" class="file-preview">e.g., IMG_3664.jpeg</div>
+            </div>
+             <div class="form-group">
+                <label for="panCard2">PAN Document 2 (Optional)</label>
+                <input type="file" id="panCard2" name="panCard2" accept=".jpg,.jpeg,.png,.pdf" onchange="showFileName('panCard2', 'panCard2Preview')">
+                <div id="panCard2Preview" class="file-preview">e.g., IMG_3665.jpeg</div>
+            </div>
+        </div>
+
+        <div class="file-upload-section">
+            <h3>Aadhaar Card</h3>
+             <div class="form-group">
+                <label for="aadhaarCard">Aadhaar Document</label>
+                <input type="file" id="aadhaarCard" name="aadhaarCard" accept=".jpg,.jpeg,.png,.pdf" onchange="showFileName('aadhaarCard', 'aadhaarCardPreview')">
+                <div id="aadhaarCardPreview" class="file-preview">e.g., Aadhaar.pdf</div>
+            </div>
+        </div>
+        <button type="button" onclick="navigateToPage('otherSectionsPage')">Next: Other Sections</button>
+    </div>
+
+    <!-- Page 6: Other Sections & Apply -->
+    <div id="otherSectionsPage" class="page">
+        <h2>Application Sections</h2>
+        <div class="navigation-section">
+            <button type="button" onclick="alert('Section: Relatives Working - Not Implemented')">> Relatives Working</button>
+            <button type="button" onclick="alert('Section: IndiGo Cadet Pilot Program - Not Implemented')">> IndiGo Cadet Pilot Program Evaluation History:</button>
+            <button type="button" onclick="alert('Section: Aircraft Details - Not Implemented')">> Aircraft wise Details of Flying experience other than A320/ATR72-600</button>
+            <button type="button" onclick="alert('Section: Fighter Experience - Not Implemented')">> Details Of Fighter Experience</button>
+            <button type="button" onclick="alert('Section: Pilot License - Not Implemented')">> Details of the Professional Pilots License:</button>
+            <button type="button" onclick="alert('Section: Job-Specific - Not Implemented')">> Job-Specific Information</button>
+        </div>
+
+        <div class="action-buttons-group">
+            <button type="button" onclick="alert('View Profile - Not Implemented')">View Profile</button>
+            <button type="button" onclick="alert('Save - Not Implemented. Data is not saved in this demo.')">Save</button>
+            <button type="button" onclick="navigateToPage('paymentPage')">Apply</button>
+        </div>
+         <button type="button" onclick="navigateToPage('documentsPage')" style="background-color: #6c757d; margin-top: 20px;">< Back to Documents</button>
+    </div>
+
+    <!-- Page 7: Payment -->
+    <div id="paymentPage" class="page">
+        <h2>Application Payment</h2>
+        <p>To complete your application, please make the payment using the QR code below.</p>
+        
+        <img id="qrCodeImage" src="qr.png" alt="Scan QR Code for Payment">
+        <p id="qrCodePlaceholder" style="text-align:center; color:red; display:none;">
+            QR Code Image Placeholder. <br>
+            (Edit the HTML: replace 'YOUR_QR_CODE_IMAGE_URL.png' with your QR image path/URL)
+        </p>
+
+        <p class="whatsapp-note">
+            After payment, please send the payment screenshot to Indigo our WhatsApp.
+        </p>
+        <a href="#" id="whatsappLink" class="btn-link" target="_blank" style="background-color: #25D366;">
+            Send Screenshot on WhatsApp
+        </a>
+        <p style="font-size:0.8em; text-align:center; margin-top:10px;">
+            Clicking the button will open WhatsApp (app or web).
+        </p>
+
+        <button type="button" onclick="navigateToPage('otherSectionsPage')" style="background-color: #6c757d; margin-top: 20px;">< Back to Application</button>
+    </div>
 
     <script>
-        document.addEventListener('DOMContentLoaded', () => {
-            const jobListingsContainer = document.getElementById('job-listings-container');
-            const modal = document.getElementById('applicationModal');
-            const closeModalBtn = document.getElementById('closeModalBtn');
-            const applicationForm = document.getElementById('applicationForm');
-            const modalJobTitleElement = document.getElementById('modalJobTitle');
-            const appliedJobTitleInput = document.getElementById('appliedJobTitle');
-            const formMessage = document.getElementById('formMessage');
-            const submitBtn = document.getElementById('submitApplicationBtn');
-            const whatsAppPromptSection = document.getElementById('whatsAppPromptSection');
+        let currentPageId = 'signInPage';
 
-            const RECIPIENT_WHATSAPP_NUMBER = "919529014591"; // Your number with country code
+        function navigateToPage(pageId) {
+            const currentPage = document.getElementById(currentPageId);
+            const nextPage = document.getElementById(pageId);
 
-            const jobs = [
-                { id: 1, title: 'Software Development Intern (Frontend)', company: 'Indigo Tech Innovations', location: 'Remote (India)', description: 'Exciting internship opportunity...' },
-                { id: 2, title: 'Junior HR Executive', company: 'Indigo Career Services', location: 'Bangalore, India', description: 'Assist in recruitment...' },
-                { id: 3, title: 'Digital Marketing Trainee', company: 'Indigo Marketing Solutions', location: 'Mumbai, India (Hybrid)', description: 'Learn and implement SEO...' },
-                { id: 4, title: 'Customer Care Associate (Voice)', company: 'Indigo Support Hub', location: 'Work From Home (Pan India)', description: 'Provide excellent customer support...' }
-            ];
+            if (currentPage) currentPage.classList.remove('active');
+            if (nextPage) nextPage.classList.add('active');
+            
+            currentPageId = pageId;
+            window.scrollTo(0, 0); // Scroll to top of new page
+        }
 
-            function displayJobs() {
-                if (!jobListingsContainer) return;
-                const h2 = jobListingsContainer.querySelector('h2') || document.createElement('h2');
-                h2.textContent = 'Available Positions';
-                jobListingsContainer.innerHTML = '';
-                jobListingsContainer.appendChild(h2);
+        function handleSignIn() {
+            const emailInput = document.getElementById('email');
+            const passwordInput = document.getElementById('password');
+            const signInError = document.getElementById('signInError');
+            
+            let isValid = true;
+            signInError.style.display = 'none';
+            signInError.textContent = '';
 
-                jobs.forEach(job => {
-                    const jobCard = document.createElement('article');
-                    jobCard.classList.add('job-card');
-                    jobCard.innerHTML = `
-                        <h3>${job.title}</h3>
-                        <p><strong>Company:</strong> ${job.company}</p>
-                        <p><strong>Location:</strong> ${job.location}</p>
-                        <p>${job.description}</p>
-                        <button class="apply-btn" data-job-title="${job.title}">Apply Now</button>
-                    `;
-                    jobListingsContainer.appendChild(jobCard);
-                });
-
-                document.querySelectorAll('.apply-btn').forEach(button => {
-                    button.addEventListener('click', (e) => {
-                        const jobTitle = e.target.dataset.jobTitle;
-                        openModal(jobTitle);
-                    });
-                });
+            // Basic email validation (checks for @ and some content)
+            if (!emailInput.value || !/\S+@\S+\.\S+/.test(emailInput.value)) {
+                signInError.textContent += 'Please enter a valid email address.\n';
+                isValid = false;
+            }
+            if (!passwordInput.value) {
+                signInError.textContent += 'Please enter your password.\n';
+                isValid = false;
             }
 
-            function openModal(jobTitle) {
-                modalJobTitleElement.textContent = `Apply for: ${jobTitle}`;
-                appliedJobTitleInput.value = jobTitle;
-                
-                formMessage.textContent = '';
-                formMessage.className = 'form-message';
-                applicationForm.reset();
-                submitBtn.disabled = false;
-                submitBtn.textContent = 'Generate & Download Application PDF';
-                
-                applicationForm.style.display = 'block';
-                whatsAppPromptSection.style.display = 'none';
-                whatsAppPromptSection.innerHTML = '';
-
-                modal.style.display = 'block';
+            if (isValid) {
+                // In a real app, you would authenticate here
+                navigateToPage('introPage');
+            } else {
+                signInError.style.display = 'block';
             }
+        }
 
-            function closeModal() {
-                modal.style.display = 'none';
-                applicationForm.style.display = 'block';
-                whatsAppPromptSection.style.display = 'none';
+        function togglePasswordVisibility() {
+            const passwordInput = document.getElementById('password');
+            const showBtn = document.querySelector('.show-password-btn');
+            if (passwordInput.type === 'password') {
+                passwordInput.type = 'text';
+                showBtn.textContent = 'Hide';
+            } else {
+                passwordInput.type = 'password';
+                showBtn.textContent = 'Show';
             }
+        }
 
-            if (closeModalBtn) {
-                closeModalBtn.addEventListener('click', closeModal);
-            }
-
-            window.addEventListener('click', (event) => {
-                if (event.target === modal) {
-                    closeModal();
-                }
-            });
-
-            function isMobileDevice() {
-                // Basic check for mobile user agents.
-                return /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent);
-            }
-
-            if (applicationForm) {
-                applicationForm.addEventListener('submit', async function(event) {
-                    event.preventDefault();
-                    formMessage.textContent = '';
-                    formMessage.className = 'form-message';
-
-                    const userEmail = document.getElementById('email').value.trim();
-                    const userPhone = document.getElementById('phone').value.trim();
-                    const jobTitle = appliedJobTitleInput.value;
-
-                    if (!userEmail || !userPhone) {
-                        formMessage.textContent = 'Please fill in your email and phone number.';
-                        formMessage.classList.add('error');
-                        return;
-                    }
-                    if (!document.getElementById('phone').checkValidity()) {
-                        formMessage.textContent = 'Please enter a valid 10-digit Indian phone number.';
-                        formMessage.classList.add('error');
-                        return;
-                    }
-
-                    submitBtn.disabled = true;
-                    submitBtn.textContent = 'Generating PDF...';
-
-                    try {
-                        const { jsPDF } = window.jspdf;
-                        const doc = new jsPDF();
-                        const lineHeight = 7;
-                        let currentY = 20;
-
-                        doc.setFontSize(18);
-                        doc.text("Job Application Details", 105, currentY, { align: 'center' });
-                        currentY += lineHeight * 2;
-
-                        doc.setFontSize(12);
-                        doc.text(`Job Title: ${jobTitle}`, 14, currentY);
-                        currentY += lineHeight;
-                        doc.text(`Applicant Email: ${userEmail}`, 14, currentY);
-                        currentY += lineHeight;
-                        doc.text(`Applicant Phone: ${userPhone}`, 14, currentY);
-                        currentY += lineHeight * 2;
-
-                        doc.setFontSize(10);
-                        doc.text("Next Steps (via WhatsApp):", 14, currentY);
-                        currentY += lineHeight;
-                        doc.text("- This PDF contains your application details.", 14, currentY);
-                        currentY += lineHeight;
-                        doc.text("- You will need to send this PDF AND your payment screenshot", 14, currentY);
-                        currentY += lineHeight;
-                        doc.text(`  via WhatsApp to +${RECIPIENT_WHATSAPP_NUMBER.slice(0,2)} ${RECIPIENT_WHATSAPP_NUMBER.slice(2)}.`, 14, currentY);
-
-
-                        const pdfFileName = `Application_${jobTitle.replace(/[^a-zA-Z0-9]/g, '_')}_${userEmail.split('@')[0]}.pdf`;
-                        doc.save(pdfFileName);
-
-                        formMessage.textContent = `PDF "${pdfFileName}" downloaded! Check your Downloads folder.`;
-                        formMessage.classList.add('success');
-                        
-                        applicationForm.style.display = 'none';
-                        showWhatsAppPrompt(jobTitle, userEmail, userPhone, pdfFileName);
-
-                    } catch (error) {
-                        console.error("Error generating PDF:", error);
-                        formMessage.textContent = 'Error generating PDF. Please try again.';
-                        formMessage.classList.add('error');
-                    } finally {
-                        submitBtn.disabled = false;
-                        submitBtn.textContent = 'Generate & Download Application PDF';
-                    }
-                });
-            }
-
-            function showWhatsAppPrompt(jobTitle, userEmail, userPhone, pdfFileName) {
-                const preFilledMessage = `Job Application Submission:
-Job Title: ${jobTitle}
-Applicant Email: ${userEmail}
-Applicant Phone: ${userPhone}
-
-I have attached the application PDF (${pdfFileName}) and my payment screenshot for this application.`;
-
-                let whatsAppUrl;
-                if (isMobileDevice()) {
-                    whatsAppUrl = `https://wa.me/${RECIPIENT_WHATSAPP_NUMBER}?text=${encodeURIComponent(preFilledMessage)}`;
+        function showFileName(inputId, previewId) {
+            const input = document.getElementById(inputId);
+            const preview = document.getElementById(previewId);
+            if (input.files && input.files.length > 0) {
+                if (input.files.length === 1) {
+                    preview.textContent = input.files[0].name;
                 } else {
-                    whatsAppUrl = `https://web.whatsapp.com/send?phone=${RECIPIENT_WHATSAPP_NUMBER}&text=${encodeURIComponent(preFilledMessage)}`;
+                    preview.textContent = `${input.files.length} files selected`;
                 }
-
-                whatsAppPromptSection.innerHTML = `
-                    <h4>Next: Send via WhatsApp</h4>
-                    <p>Your application PDF (<code>${pdfFileName}</code>) has been downloaded to your computer/device (usually in your "Downloads" folder).</p>
-                    <p><strong>CRITICAL NEXT STEP:</strong></p>
-                    <ol>
-                        <li>Click the button below to open WhatsApp.</li>
-                        <li>A chat with <strong>+${RECIPIENT_WHATSAPP_NUMBER}</strong> will open with a pre-filled message.</li>
-                        <li>In the WhatsApp chat, you MUST MANUALLY ATTACH **TWO (2)** FILES:
-                            <ul>
-                                <li>The PDF you just downloaded (<code>${pdfFileName}</code>).</li>
-                                <li>Your payment screenshot image.</li>
-                            </ul>
-                        </li>
-                        <li>Review the message and attachments, then send it via WhatsApp.</li>
-                    </ol>
-                    <a href="${whatsAppUrl}" class="action-btn whatsapp-btn" target="_blank" style="width: calc(100% - 30px); margin-bottom:10px;">Open WhatsApp to Send Application</a>
-                    <button id="promptCloseBtn" class="action-btn" style="background-color:#777; width: calc(100% - 30px);">Close This Message</button>
-                `;
-                whatsAppPromptSection.style.display = 'block';
-
-                document.getElementById('promptCloseBtn').addEventListener('click', () => {
-                    closeModal();
-                });
+            } else {
+                // Reset to default placeholder if no file is selected (e.g., user cancels selection)
+                if(inputId === 'resumeCv') preview.textContent = 'e.g., Copy of White and Violet Simple Clean Corporate CV Resume.pdf.pdf';
+                else if(inputId === 'coverLetter') preview.textContent = 'e.g., CoverLetter.pdf';
+                else if(inputId === 'additionalDocs') preview.textContent = 'Add a Document';
+                else if(inputId === 'panCard1') preview.textContent = 'e.g., IMG_3664.jpeg';
+                else if(inputId === 'panCard2') preview.textContent = 'e.g., IMG_3665.jpeg';
+                else if(inputId === 'aadhaarCard') preview.textContent = 'e.g., Aadhaar.pdf';
             }
+        }
 
-            displayJobs();
+        document.addEventListener('DOMContentLoaded', () => {
+            document.querySelectorAll('.page').forEach(page => page.classList.remove('active'));
+            document.getElementById('signInPage').classList.add('active');
+
+            const whatsappNumber = "919529014591"; 
+            const message = encodeURIComponent("Hello, I have made the payment for my application. Here is the screenshot:");
+            const whatsappLinkElement = document.getElementById('whatsappLink');
+            
+            // UPDATED LINE for WhatsApp link:
+            // This will attempt to go directly to WhatsApp Web on desktop.
+            // On mobile, behavior might vary (could open app or web in browser).
+            whatsappLinkElement.href = `https://web.whatsapp.com/send?phone=${whatsappNumber}&text=${message}`;
+            
+            const qrImg = document.getElementById('qrCodeImage');
+            const qrPlaceholder = document.getElementById('qrCodePlaceholder');
+            if (!qrImg.getAttribute('src') || qrImg.getAttribute('src') === 'YOUR_QR_CODE_IMAGE_URL.png') {
+                qrImg.style.display = 'none';
+                qrPlaceholder.style.display = 'block';
+            }
         });
+
     </script>
 
 </body>
