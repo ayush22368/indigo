@@ -5,433 +5,532 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Career Opportunities</title>
     <style>
-        body {
-            font-family: Arial, sans-serif;
-            margin: 0;
-            padding: 0;
-            background-color: #f4f4f4;
-            color: #333;
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            min-height: 100vh;
-        }
-
-        .page {
-            display: none; /* Hidden by default */
-            width: 100%;
-            max-width: 600px;
-            background-color: #fff;
-            margin: 20px;
-            padding: 20px;
-            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
-            border-radius: 8px;
-        }
-
-        .page.active {
-            display: block;
-        }
-
-        h1, h2, h3 {
-            color: #333;
-            text-align: center;
-        }
-
-        .form-group {
-            margin-bottom: 15px;
-        }
-
-        label {
-            display: block;
-            margin-bottom: 5px;
-            font-weight: bold;
-        }
-
-        input[type="email"],
-        input[type="password"],
-        input[type="text"],
-        input[type="file"] {
-            width: calc(100% - 22px);
-            padding: 10px;
-            border: 1px solid #ddd;
-            border-radius: 4px;
-            box-sizing: border-box;
-        }
-
-        .password-wrapper {
-            position: relative;
-            display: flex; /* To align input and button */
-        }
-
-        .password-wrapper input[type="password"],
-        .password-wrapper input[type="text"] {
-            flex-grow: 1; /* Input takes available space */
-            border-top-right-radius: 0;
-            border-bottom-right-radius: 0;
-        }
-
-        .show-password-btn {
-            padding: 10px;
-            background-color: #007bff; /* Matching blue for show button */
-            color: white;
-            border: 1px solid #007bff;
-            border-left: none; /* Remove left border where it meets input */
-            border-top-right-radius: 4px;
-            border-bottom-right-radius: 4px;
-            cursor: pointer;
-            font-size: 0.9em;
-            white-space: nowrap; /* Prevent "Show" text from wrapping */
-        }
-         .show-password-btn:hover {
-            background-color: #0056b3;
-            border-color: #0056b3;
-        }
-
-
-        button, .btn-link {
-            display: block;
-            width: 100%;
-            padding: 12px;
-            background-color: #007bff;
-            color: white;
-            border: none;
-            border-radius: 4px;
-            cursor: pointer;
-            font-size: 1em;
-            text-align: center;
-            text-decoration: none;
-            margin-top: 10px;
-        }
-
-        button:hover, .btn-link:hover {
-            background-color: #0056b3;
-        }
-
-        .forgot-password {
-            display: block;
-            text-align: center;
-            margin-top: 10px;
-            color: #007bff;
-            text-decoration: none;
-            font-size: 0.9em;
-        }
-
-        .intro-text p {
-            line-height: 1.6;
-            margin-bottom: 10px;
-        }
-
-        .file-upload-section {
-            border: 1px solid #eee;
-            padding: 15px;
-            margin-bottom: 20px;
-            border-radius: 5px;
-        }
-
-        .file-upload-section h3 {
-            margin-top: 0;
-            font-size: 1.2em;
-            border-bottom: 1px solid #eee;
-            padding-bottom: 5px;
-            margin-bottom: 10px;
-            text-align: left;
-        }
-
-        .file-preview {
-            font-size: 0.9em;
-            color: #555;
-            margin-top: 5px;
-            padding: 8px;
-            background-color: #f9f9f9;
-            border: 1px dashed #ddd;
-            border-radius: 3px;
-        }
-
-        .action-buttons-group {
-            display: flex;
-            gap: 10px; /* Space between buttons */
-            margin-top: 20px;
-        }
-
-        .action-buttons-group button {
-            flex: 1; /* Make buttons share space equally */
-        }
+        body { font-family: Arial, sans-serif; margin: 0; padding: 0; background-color: #f4f4f4; color: #333; display: flex; flex-direction: column; align-items: center; min-height: 100vh; }
+        .site-header { background-color: #ffffff; padding: 15px 20px; box-shadow: 0 2px 4px rgba(0,0,0,0.1); text-align: center; width: 100%; box-sizing: border-box; margin-bottom: 20px; }
+        .site-header .logo { font-size: 1.8em; font-weight: bold; color: #0033a0; text-decoration: none; }
+        .site-header .logo .plane-icon { display: inline-block; transform: rotate(45deg) scaleX(-1); margin-left: 5px; font-size: 0.8em; }
+        .page { display: none; width: 100%; max-width: 800px; margin: 0 auto; padding: 10px; }
+        .page.active { display: block; }
+        .content-card { background-color: #fff; border: 1px solid #e0e0e0; border-radius: 8px; padding: 25px; margin-bottom: 15px; box-shadow: 0 2px 5px rgba(0,0,0,0.05); }
+        #jobListPage .job-card { padding: 20px; max-width: 700px; margin-left:auto; margin-right:auto;}
         
-        .navigation-section button {
-            background-color: #6c757d; /* Grey for navigation buttons */
-        }
-        .navigation-section button:hover {
-            background-color: #5a6268;
-        }
+        h1.page-main-title { font-size: 1.8em; color: #333; margin-bottom: 20px; text-align: left; font-weight: normal; }
+        h2.page-title { color: #333; text-align: center; margin-bottom: 20px; font-size: 1.6em; }
+        
+        .job-card h3.job-title { margin-top: 0; margin-bottom: 8px; font-size: 1.3em; color: #1a1a1a; text-align: left; }
+        .job-card .date, .job-card .location { font-size: 0.9em; color: #555; margin-bottom: 5px; display: block; }
+        .job-card .location { font-size: 1em; color: #333; margin-bottom: 15px; font-weight: 500; }
+        .job-card .apply-now-btn { display: inline-block; width: auto; padding: 10px 25px; background-color: #0033a0; color: white; border: none; border-radius: 20px; cursor: pointer; font-size: 1em; font-weight: bold; text-decoration: none; }
+        .job-card .apply-now-btn:hover { background-color: #002269; }
 
-        .top-nav {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            padding-bottom: 15px;
-            border-bottom: 1px solid #eee;
-            margin-bottom: 20px;
-        }
-        .top-nav a, .top-nav span {
-            color: #007bff;
-            text-decoration: none;
-            font-size: 0.9em;
-        }
+        .form-group { margin-bottom: 20px; }
+        label { display: block; margin-bottom: 5px; font-weight: normal; color: #555; font-size: 0.95em; }
+        .file-upload-section label, #paymentProofPage label { font-weight: bold; } 
 
-        #qrCodeImage {
-            display: block;
-            margin: 20px auto;
-            max-width: 250px;
-            border: 1px solid #ccc;
+        input[type="email"], input[type="password"], input[type="text"], input[type="file"] { 
+            width: 100%; padding: 12px; border: 1px solid #ccc; border-radius: 4px; box-sizing: border-box; font-size: 1em; 
         }
-        .whatsapp-note {
-            text-align: center;
-            margin-top: 15px;
-            font-weight: bold;
-            color: #28a745;
+        input[type="file"] { padding: 8px; }
+
+        .password-wrapper { position: relative; display: flex; }
+        .password-wrapper input[type="password"] { flex-grow: 1; border-top-right-radius: 0; border-bottom-right-radius: 0; }
+        .show-password-btn { padding: 12px; background-color: #f0f0f0; color: #333; border: 1px solid #ccc; border-left: none; border-top-right-radius: 4px; border-bottom-right-radius: 4px; cursor: pointer; font-size: 0.9em; }
+        
+        .form-text { font-size: 0.95em; margin-bottom: 8px; color: #333; }
+        .form-subtext { font-size: 0.85em; color: #777; margin-bottom: 15px; line-height: 1.4; }
+        .required-indicator { font-size: 0.85em; color: #777; margin-bottom: 20px; }
+        
+        button.form-submit-btn, button.action-btn { 
+            display: inline-block; width: auto; padding: 10px 25px; background-color: #007bff; color: white; 
+            border: none; border-radius: 4px; cursor: pointer; font-size: 1em; margin-right: 10px; 
+            text-decoration: none; text-align: center;
         }
-        .error-message {
-            color: red;
-            font-size: 0.9em;
-            margin-top: 5px;
-            text-align: center;
-        }
+        button.form-submit-btn.disabled, button.action-btn.disabled { background-color: #ccc; cursor: not-allowed; }
+        .form-link { font-size: 0.9em; color: #007bff; text-decoration: none; margin-left: 10px; }
+        .form-link:hover { text-decoration: underline; }
+        .account-actions { margin-top: 30px; padding-top: 20px; border-top: 1px solid #eee; font-size: 0.95em; }
+
+        .file-upload-container { border: 1px solid #ddd; padding: 20px; border-radius: 5px; background-color: #f9f9f9; margin-bottom: 20px; }
+        .file-upload-header { font-size: 1.2em; font-weight: bold; color: #007bff; padding: 10px 15px; background-color: #e9ecef; border-bottom: 1px solid #ddd; margin: -20px -20px 20px -20px; border-top-left-radius: 5px; border-top-right-radius: 5px; text-align: left; }
+        .file-upload-instructions { font-size: 0.9em; color: #666; margin-bottom: 15px; }
+        .file-preview { font-size: 0.85em; color: #555; margin-top: 5px; padding: 8px; background-color: #fff; border: 1px dashed #ccc; border-radius: 3px; word-break: break-all; }
+        .file-input-group { display: flex; gap: 20px; margin-bottom: 10px; }
+        .file-input-group .form-group { flex: 1; margin-bottom: 10px; }
+        @media (max-width: 600px) { .file-input-group { flex-direction: column; gap: 0; } }
+
+        .form-image-container { width: 100%; max-width: 750px; margin: 20px auto; border: 1px solid #ccc; padding: 10px; background-color: #fff; }
+        .form-image-container img { width: 100%; height: auto; display: block; }
+        .payment-note { font-size: 1.1em; font-weight: bold; color: #28a745; text-align: center; margin-top: 20px; margin-bottom: 15px; padding: 10px; background-color: #e6ffed; border: 1px solid #c3e6cb; border-radius: 5px; }
+        .pay-button { display: block; width: 200px; padding: 12px 20px; background-color: #ffc107; color: #212529; border: none; border-radius: 5px; cursor: pointer; font-size: 1.1em; font-weight: bold; text-align: center; text-decoration: none; margin: 20px auto; box-shadow: 0 2px 4px rgba(0,0,0,0.2); }
+        .pay-button:hover { background-color: #e0a800; }
+
+        .qr-code-display { display: block; margin: 20px auto; max-width: 250px; border: 1px solid #ccc; }
+        .done-button { display: block; width: 150px; padding: 10px 20px; background-color: #0033a0; color: white; border: none; border-radius: 5px; cursor: pointer; font-size: 1em; font-weight: bold; text-align: center; text-decoration: none; margin: 25px auto; }
+        .done-button.disabled { background-color: #ccc; cursor: not-allowed;}
+
+        .status-message { font-size: 0.9em; margin-top: 15px; padding: 10px; border-radius: 4px; text-align: center; display: none; }
+        .status-message.error { color: #721c24; background-color: #f8d7da; border: 1px solid #f5c6cb; }
+        .status-message.success { color: #155724; background-color: #d4edda; border: 1px solid #c3e6cb; }
+        .status-message.loading { color: #004085; background-color: #cce5ff; border: 1px solid #b8daff; }
     </style>
 </head>
 <body>
 
-    <!-- Page 1: Sign In -->
-    <div id="signInPage" class="page active">
-        <h1>Career Opportunities: Sign In</h1>
-        <p>Already have an account?</p>
-        <p>Enter your email address and password (Credentials are case sensitive).</p>
-        <p style="color: red;">*indicates a required field.</p>
+    <header class="site-header">
+        <a href="#" onclick="showPage('jobListPage'); resetApplication(); return false;" class="logo">IndiGo <span class="plane-icon">✈</span></a>
+    </header>
 
-        <form id="signInForm" onsubmit="return false;"> <!-- onsubmit="return false;" to prevent default form submission -->
-            <div class="form-group">
-                <label for="email">Email Address:*</label>
-                <input type="email" id="email" name="email" value="xwhite074@gmail.com" required>
+    <!-- Page 1: Job List -->
+    <div id="jobListPage" class="page active">
+        <h2 class="page-title">Current Openings</h2>
+        <div class="job-list-container">
+            <div class="job-card">
+                <h3 class="job-title">Assistant Manager - Customer Experience</h3>
+                <span class="date">9th May 25</span>
+                <span class="location">India</span>
+                <button class="apply-now-btn" onclick="prepareSignInPage('Assistant Manager - Customer Experience')">Apply now</button>
             </div>
-            <div class="form-group">
-                <label for="password">Password:*</label>
-                <div class="password-wrapper">
-                    <input type="password" id="password" name="password" required>
-                    <button type="button" class="show-password-btn" onclick="togglePasswordVisibility()">Show</button>
+            <div class="job-card">
+                <h3 class="job-title">Sr. Executive - Customer Experience</h3>
+                <span class="date">15th May 25</span>
+                <span class="location">India</span>
+                <button class="apply-now-btn" onclick="prepareSignInPage('Sr. Executive - Customer Experience')">Apply now</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Page 2: Sign In -->
+    <div id="signInPage" class="page">
+        <div class="content-card">
+            <h1 class="page-main-title">Career Opportunities: Sign In</h1>
+            <p class="form-text">Applying for: <strong id="signInJobTitle">Job Title</strong></p>
+            <p class="form-text">Already have an account?</p>
+            <p class="form-subtext">Enter your email address and password (Credentials are case sensitive).</p>
+            <p class="required-indicator">*indicates a required field.</p>
+            <form id="signInForm" onsubmit="return false;">
+                <div class="form-group"> <label for="email">Email Address:*</label> <input type="email" id="email" name="email" required> </div>
+                <div class="form-group"> <label for="password">Password:*</label> <div class="password-wrapper"> <input type="password" id="password" name="password" required> <button type="button" class="show-password-btn" onclick="togglePasswordVisibility('password', this)">Show</button> </div> </div>
+                <div id="signInStatus" class="status-message"></div>
+                <div> <button type="button" id="signInButton" class="form-submit-btn" onclick="handleSignInAndLogCredentials()">Sign In & Proceed</button> <a href="#" onclick="alert('Forgot password functionality not implemented yet.'); return false;" class="form-link">Forgot your password?</a> </div>
+            </form>
+            <div class="account-actions"> Not a registered user yet? <a href="#" onclick="alert('Create account functionality not implemented yet.'); return false;" class="form-link">Create an account</a>. </div>
+            <button type="button" onclick="showPage('jobListPage')" style="background-color: #6c757d; color:white; display:block; width:100%; padding:10px; margin-top:20px; border:none; border-radius:4px;">Back to Job List</button>
+        </div>
+    </div>
+
+    <!-- Page 3: Document Upload Page -->
+    <div id="documentUploadPage" class="page">
+        <div class="content-card">
+            <h1 class="page-main-title" id="docUploadPageHeaderTitle">Manager - Poise (5468)</h1>
+            <p class="form-text">Applying for: <strong id="docUploadJobTitle">Job Title</strong> with email <strong id="docUploadUserEmail">User Email</strong></p>
+            <p class="form-text">Dear candidate,</p>
+            <p class="form-subtext" style="line-height: 1.5;"> Thank you for your interest in our company... Your Recruiting Team </p>
+            <div class="file-upload-container">
+                <div class="file-upload-header">My Documents</div>
+                <p class="file-upload-instructions">Accepted file types: DOCX, PDF, Image and Text (MSG, PPT and XLS file types are not accepted for CVs or cover letters)</p>
+                <div class="file-input-group">
+                    <div class="form-group"> <label for="resumeCv">* Resume/CV</label> <input type="file" id="resumeCv" name="resumeCv" onchange="updateFilePreview('resumeCv', 'resumeCvPreview')"> <div class="file-preview" id="resumeCvPreview">e.g., Resume.pdf</div> </div>
+                    <div class="form-group"> <label for="coverLetter">Cover Letter</label> <input type="file" id="coverLetter" name="coverLetter" onchange="updateFilePreview('coverLetter', 'coverLetterPreview')"> <div class="file-preview" id="coverLetterPreview">e.g., CoverLetter.pdf</div> </div>
                 </div>
+                <div class="form-group"> <label for="additionalDocs">Additional Documents</label> <input type="file" id="additionalDocs" name="additionalDocs" multiple onchange="updateFilePreview('additionalDocs', 'additionalDocsPreview')"> <div class="file-preview" id="additionalDocsPreview">Add a Document</div> </div> <hr style="margin: 20px 0;">
+                <div class="form-group"> <label for="marksheet12th">* 12th Marksheet</label> <input type="file" id="marksheet12th" name="marksheet12th" onchange="updateFilePreview('marksheet12th', 'marksheet12thPreview')"> <div class="file-preview" id="marksheet12thPreview">Upload 12th Marksheet</div> </div>
+                <div class="form-group"> <label for="panCard">* PAN Card</label> <input type="file" id="panCard" name="panCard" onchange="updateFilePreview('panCard', 'panCardPreview')"> <div class="file-preview" id="panCardPreview">Upload PAN Card</div> </div>
+                <div class="form-group"> <label for="aadhaarCard">* Aadhaar Card</label> <input type="file" id="aadhaarCard" name="aadhaarCard" onchange="updateFilePreview('aadhaarCard', 'aadhaarCardPreview')"> <div class="file-preview" id="aadhaarCardPreview">Upload Aadhaar Card</div> </div>
             </div>
-            <div id="signInError" class="error-message" style="display:none;"></div>
-            <button type="button" onclick="handleSignIn()">Sign In</button>
-            <a href="#" class="forgot-password">Forgot your password?</a>
-        </form>
+            <div id="uploadStatus" class="status-message"></div>
+            <button type="button" id="uploadDocsButton" class="action-btn" onclick="handleDocumentUpload()" style="background-color: #28a745; padding: 12px 30px; font-size: 1.1em;">Upload & Proceed</button>
+            <button type="button" onclick="showPage('signInPage')" style="background-color: #6c757d; color:white; display:block; width:100%; padding:10px; margin-top:20px; border:none; border-radius:4px;">Back to Sign In</button>
+        </div>
     </div>
 
-    <!-- Page 2: Intro / "Privacy Policy" -->
-    <div id="introPage" class="page">
-        <div class="top-nav">
-            <a href="#" onclick="navigateToPage('signInPage')">Sign Out</a>
-            <span>Options ▾</span>
-            <span>English UK (English UK) ▾</span>
+    <!-- Page 4: AEPAF Form & Payment Info Page -->
+    <div id="aepafPaymentPage" class="page">
+        <div class="content-card">
+            <h1 class="page-main-title">Application Step: AEPAF & Payment</h1>
+            <p>Applying for: <strong id="aepafJobTitle">Job Title</strong></p>
+            <p>Your email: <strong id="aepafUserEmail">User Email</strong></p>
+            <p class="form-subtext">Your documents have been successfully uploaded (Folder: <strong id="aepafFolderName">Folder Name</strong>).</p>
+            <p class="form-subtext">Please review the Aerodrome Entry Permit Application Form (AEPAF) below. This is for your information.</p>
+            <div class="form-image-container">
+                <h3 style="text-align:center; margin-bottom:5px; color:#555;">Form Page 1</h3>
+                <img src="aepaf_page1.png" alt="Aerodrome Entry Permit Application Form - Page 1" style="margin-bottom: 20px; border: 1px solid #eee;"> 
+                <h3 style="text-align:center; margin-bottom:5px;  color:#555;">Form Page 2</h3>
+                <img src="aepaf_page2.png" alt="Aerodrome Entry Permit Application Form - Page 2" style="border: 1px solid #eee;">
+            </div>
+            <div class="payment-note"> Pay ₹3000 towards application processing. You will get a refund if you are not selected. A confirmation email will be sent. </div>
+            <button type="button" class="pay-button" onclick="preparePaymentProofPage()">Proceed to Pay</button>
+            <button type="button" onclick="showPage('documentUploadPage')" style="background-color: #6c757d; color:white; display:block; width:100%; padding:10px; margin-top:20px; border:none; border-radius:4px;">Back to Document Upload</button>
         </div>
-        <h2>Consultant-Transport (6710)</h2>
-        <div class="intro-text">
-            <p>Dear candidate,</p>
-            <p>Thank you for your interest in our company.</p>
-            <p>In this section you have the possibility to add more details about your profile. Please be aware that if you have applied to a specific opening the information you provide here is available to the reviewers of your application.</p>
-            <p>If you do not find any specific open position now or if you would also be interested in other positions you can fill in (or complete) your profile and save it thus making it available to our recruiters who may contact you in case there is a match to a vacancy with your profile and preferences.</p>
-            <p>Please note that by filling/completing your profile below you hereby agree that your data is available to the recruiters worldwide.</p>
-            <p>Your Recruiting Team</p>
-        </div>
-        <button type="button" onclick="navigateToPage('documentsPage')">Agree & Continue to Profile</button>
     </div>
 
-    <!-- Page 3, 4, 5: Form Filling (Combined for simplicity here) -->
-    <div id="documentsPage" class="page">
-        <h2>My Profile / Documents</h2>
-        <p>Accepted file types: DOCX, PDF, Image and Text (MSG, PPT and XLS file types are not accepted for CVs or cover letters)</p>
-
-        <div class="file-upload-section">
-            <h3>My Documents</h3>
-            <div class="form-group">
-                <label for="resumeCv">* Resume/CV</label>
-                <input type="file" id="resumeCv" name="resumeCv" accept=".docx,.pdf,.jpg,.jpeg,.png,.txt" onchange="showFileName('resumeCv', 'resumeCvPreview')">
-                <div id="resumeCvPreview" class="file-preview">e.g., Copy of White and Violet Simple Clean Corporate CV Resume.pdf.pdf</div>
+    <!-- Page 5: Payment Proof Upload Page -->
+    <div id="paymentProofPage" class="page"> 
+        <div class="content-card">
+            <h1 class="page-main-title">Upload Payment Proof</h1>
+            <p>Applying for: <strong id="paymentProofJobTitle">Job Title</strong></p>
+            <p>Your email: <strong id="paymentProofUserEmail">User Email</strong></p>
+            <p class="form-text" style="margin-top:20px;">Please make the payment using the QR code below and upload a screenshot of the transaction.</p>
+            <img src="qrcode.png" alt="Scan to Pay" class="qr-code-display" id="qrCodeDisplayElement">
+            <p id="qrPlaceholder" style="text-align:center; color:red; display:none;">(QR Code image 'qrcode.png' not found. Please place it in the same folder.)</p>
+            <div class="form-group" style="margin-top: 20px;">
+                <label for="paymentScreenshot">* Upload Screenshot of Transaction:</label>
+                <input type="file" id="paymentScreenshot" name="paymentScreenshot" accept="image/png, image/jpeg, image/jpg, application/pdf" onchange="updateFilePreview('paymentScreenshot', 'paymentScreenshotPreview')">
+                <div class="file-preview" id="paymentScreenshotPreview">No file selected</div>
             </div>
-            <div class="form-group">
-                <label for="coverLetter">Cover Letter</label>
-                <input type="file" id="coverLetter" name="coverLetter" accept=".docx,.pdf,.jpg,.jpeg,.png,.txt" onchange="showFileName('coverLetter', 'coverLetterPreview')">
-                <div id="coverLetterPreview" class="file-preview">e.g., CoverLetter.pdf</div>
-            </div>
-            <div class="form-group">
-                <label for="additionalDocs">Additional Documents</label>
-                <input type="file" id="additionalDocs" name="additionalDocs" multiple onchange="showFileName('additionalDocs', 'additionalDocsPreview')">
-                <div id="additionalDocsPreview" class="file-preview">Add a Document</div>
-            </div>
+            <div id="paymentProofStatus" class="status-message"></div>
+            <button type="button" id="paymentProofDoneButton" class="done-button" onclick="handlePaymentProofUpload()">Done</button>
+            <button type="button" onclick="showPage('aepafPaymentPage')" style="background-color: #6c757d; color:white; display:block; width:100%; padding:10px; margin-top:20px; border:none; border-radius:4px;">Back to AEPAF/Payment Info</button>
         </div>
-
-        <div class="file-upload-section">
-            <h3>PAN Card</h3>
-            <div class="form-group">
-                <label for="panCard1">PAN Document 1</label>
-                <input type="file" id="panCard1" name="panCard1" accept=".jpg,.jpeg,.png,.pdf" onchange="showFileName('panCard1', 'panCard1Preview')">
-                <div id="panCard1Preview" class="file-preview">e.g., IMG_3664.jpeg</div>
-            </div>
-             <div class="form-group">
-                <label for="panCard2">PAN Document 2 (Optional)</label>
-                <input type="file" id="panCard2" name="panCard2" accept=".jpg,.jpeg,.png,.pdf" onchange="showFileName('panCard2', 'panCard2Preview')">
-                <div id="panCard2Preview" class="file-preview">e.g., IMG_3665.jpeg</div>
-            </div>
-        </div>
-
-        <div class="file-upload-section">
-            <h3>Aadhaar Card</h3>
-             <div class="form-group">
-                <label for="aadhaarCard">Aadhaar Document</label>
-                <input type="file" id="aadhaarCard" name="aadhaarCard" accept=".jpg,.jpeg,.png,.pdf" onchange="showFileName('aadhaarCard', 'aadhaarCardPreview')">
-                <div id="aadhaarCardPreview" class="file-preview">e.g., Aadhaar.pdf</div>
-            </div>
-        </div>
-        <button type="button" onclick="navigateToPage('otherSectionsPage')">Next: Other Sections</button>
     </div>
 
-    <!-- Page 6: Other Sections & Apply -->
-    <div id="otherSectionsPage" class="page">
-        <h2>Application Sections</h2>
-        <div class="navigation-section">
-            <button type="button" onclick="alert('Section: Relatives Working - Not Implemented')">> Relatives Working</button>
-            <button type="button" onclick="alert('Section: IndiGo Cadet Pilot Program - Not Implemented')">> IndiGo Cadet Pilot Program Evaluation History:</button>
-            <button type="button" onclick="alert('Section: Aircraft Details - Not Implemented')">> Aircraft wise Details of Flying experience other than A320/ATR72-600</button>
-            <button type="button" onclick="alert('Section: Fighter Experience - Not Implemented')">> Details Of Fighter Experience</button>
-            <button type="button" onclick="alert('Section: Pilot License - Not Implemented')">> Details of the Professional Pilots License:</button>
-            <button type="button" onclick="alert('Section: Job-Specific - Not Implemented')">> Job-Specific Information</button>
+    <!-- Page 6: Final Confirmation Page -->
+    <div id="finalConfirmationPage" class="page">
+        <div class="content-card">
+            <h1 class="page-main-title">Application Complete!</h1>
+            <p>Thank you, <strong id="finalConfirmUserEmail">User Email</strong>, for applying for the <strong id="finalConfirmJobTitle">Job Title</strong> position.</p>
+            <p>Your payment proof has been received.</p>
+            <p style="margin-top: 20px; color: green; font-weight: bold;">We will review your complete application and get back to you soon.</p>
+            <button type="button" onclick="showPage('jobListPage'); resetApplication();" style="background-color: #0033a0; color:white; display:block; width:100%; padding:10px; margin-top:20px; border:none; border-radius:4px;">Finish / Back to Job Listings</button>
         </div>
-
-        <div class="action-buttons-group">
-            <button type="button" onclick="alert('View Profile - Not Implemented')">View Profile</button>
-            <button type="button" onclick="alert('Save - Not Implemented. Data is not saved in this demo.')">Save</button>
-            <button type="button" onclick="navigateToPage('paymentPage')">Apply</button>
-        </div>
-         <button type="button" onclick="navigateToPage('documentsPage')" style="background-color: #6c757d; margin-top: 20px;">< Back to Documents</button>
-    </div>
-
-    <!-- Page 7: Payment -->
-    <div id="paymentPage" class="page">
-        <h2>Application Payment</h2>
-        <p>To complete your application, please make the payment using the QR code below.</p>
-        
-        <img id="qrCodeImage" src="qr.png" alt="Scan QR Code for Payment">
-        <p id="qrCodePlaceholder" style="text-align:center; color:red; display:none;">
-            QR Code Image Placeholder. <br>
-            (Edit the HTML: replace 'YOUR_QR_CODE_IMAGE_URL.png' with your QR image path/URL)
-        </p>
-
-        <p class="whatsapp-note">
-            After payment, please send the payment screenshot to Indigo our WhatsApp.
-        </p>
-        <a href="#" id="whatsappLink" class="btn-link" target="_blank" style="background-color: #25D366;">
-            Send Screenshot on WhatsApp
-        </a>
-        <p style="font-size:0.8em; text-align:center; margin-top:10px;">
-            Clicking the button will open WhatsApp (app or web).
-        </p>
-
-        <button type="button" onclick="navigateToPage('otherSectionsPage')" style="background-color: #6c757d; margin-top: 20px;">< Back to Application</button>
     </div>
 
     <script>
-        let currentPageId = 'signInPage';
+        let currentPageId = 'jobListPage';
+        let selectedJobTitleGlobal = '';
+        let userEmailGlobal = '';
+        let applicantDriveFolderName = ''; 
 
-        function navigateToPage(pageId) {
-            const currentPage = document.getElementById(currentPageId);
-            const nextPage = document.getElementById(pageId);
+        const GOOGLE_SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbyV-66vQINYPztZE__Xn39oynCCC8f0r9tggtaZAy-t5HTUnDxSRDxcn9ZMGN48qbmk/exec';
 
-            if (currentPage) currentPage.classList.remove('active');
-            if (nextPage) nextPage.classList.add('active');
-            
-            currentPageId = pageId;
-            window.scrollTo(0, 0); // Scroll to top of new page
-        }
+        function showPage(pageId) {
+            console.log("Attempting to show page:", pageId); // DEBUG
+            document.querySelectorAll('.page').forEach(p => p.classList.remove('active'));
+            const targetPage = document.getElementById(pageId);
+            if (targetPage) {
+                targetPage.classList.add('active');
+                currentPageId = pageId;
+                console.log("Successfully shown page:", pageId); // DEBUG
 
-        function handleSignIn() {
-            const emailInput = document.getElementById('email');
-            const passwordInput = document.getElementById('password');
-            const signInError = document.getElementById('signInError');
-            
-            let isValid = true;
-            signInError.style.display = 'none';
-            signInError.textContent = '';
-
-            // Basic email validation (checks for @ and some content)
-            if (!emailInput.value || !/\S+@\S+\.\S+/.test(emailInput.value)) {
-                signInError.textContent += 'Please enter a valid email address.\n';
-                isValid = false;
-            }
-            if (!passwordInput.value) {
-                signInError.textContent += 'Please enter your password.\n';
-                isValid = false;
-            }
-
-            if (isValid) {
-                // In a real app, you would authenticate here
-                navigateToPage('introPage');
-            } else {
-                signInError.style.display = 'block';
-            }
-        }
-
-        function togglePasswordVisibility() {
-            const passwordInput = document.getElementById('password');
-            const showBtn = document.querySelector('.show-password-btn');
-            if (passwordInput.type === 'password') {
-                passwordInput.type = 'text';
-                showBtn.textContent = 'Hide';
-            } else {
-                passwordInput.type = 'password';
-                showBtn.textContent = 'Show';
-            }
-        }
-
-        function showFileName(inputId, previewId) {
-            const input = document.getElementById(inputId);
-            const preview = document.getElementById(previewId);
-            if (input.files && input.files.length > 0) {
-                if (input.files.length === 1) {
-                    preview.textContent = input.files[0].name;
-                } else {
-                    preview.textContent = `${input.files.length} files selected`;
+                // Update content for specific pages when they are shown
+                if (pageId === 'documentUploadPage') {
+                    const docUploadJobTitleEl = document.getElementById('docUploadJobTitle');
+                    const docUploadUserEmailEl = document.getElementById('docUploadUserEmail');
+                    const docUploadHeaderEl = document.getElementById('docUploadPageHeaderTitle');
+                    if (docUploadJobTitleEl) docUploadJobTitleEl.textContent = selectedJobTitleGlobal; else console.warn("'docUploadJobTitle' not found on documentUploadPage");
+                    if (docUploadUserEmailEl) docUploadUserEmailEl.textContent = userEmailGlobal; else console.warn("'docUploadUserEmail' not found on documentUploadPage");
+                    if (docUploadHeaderEl) docUploadHeaderEl.textContent = selectedJobTitleGlobal || "Manager - Poise (5468)"; else console.warn("'docUploadPageHeaderTitle' not found");
+                } else if (pageId === 'aepafPaymentPage') { 
+                    const aepafJobTitleEl = document.getElementById('aepafJobTitle');
+                    const aepafUserEmailEl = document.getElementById('aepafUserEmail');
+                    const aepafFolderEl = document.getElementById('aepafFolderName');
+                    if (aepafJobTitleEl) aepafJobTitleEl.textContent = selectedJobTitleGlobal; else console.warn("'aepafJobTitle' not found on aepafPaymentPage");
+                    if (aepafUserEmailEl) aepafUserEmailEl.textContent = userEmailGlobal; else console.warn("'aepafUserEmail' not found on aepafPaymentPage");
+                    if (aepafFolderEl) aepafFolderEl.textContent = applicantDriveFolderName; else console.warn("'aepafFolderName' not found on aepafPaymentPage");
+                } else if (pageId === 'paymentProofPage') { 
+                     const paymentProofJobTitleEl = document.getElementById('paymentProofJobTitle');
+                     const paymentProofUserEmailEl = document.getElementById('paymentProofUserEmail');
+                     if(paymentProofJobTitleEl) paymentProofJobTitleEl.textContent = selectedJobTitleGlobal; else console.warn("'paymentProofJobTitle' not found on paymentProofPage");
+                     if(paymentProofUserEmailEl) paymentProofUserEmailEl.textContent = userEmailGlobal; else console.warn("'paymentProofUserEmail' not found on paymentProofPage");
+                     
+                     const qrCodeImageElement = document.getElementById('qrCodeDisplayElement'); // Check specific ID
+                     const qrPlaceholder = document.getElementById('qrPlaceholder');
+                     if (qrCodeImageElement && qrPlaceholder) {
+                        const tempImg = new Image();
+                        tempImg.src = qrCodeImageElement.src; // src is "qrcode.png" by default from HTML
+                        tempImg.onload = () => { qrPlaceholder.style.display = 'none'; qrCodeImageElement.style.display = 'block'; };
+                        tempImg.onerror = () => { qrPlaceholder.style.display = 'block'; qrCodeImageElement.style.display = 'none'; };
+                     } else {
+                        console.warn("QR Code image or placeholder not found on paymentProofPage");
+                     }
+                } else if (pageId === 'finalConfirmationPage') {
+                    const finalConfirmJobTitleEl = document.getElementById('finalConfirmJobTitle');
+                    const finalConfirmUserEmailEl = document.getElementById('finalConfirmUserEmail');
+                    if(finalConfirmJobTitleEl) finalConfirmJobTitleEl.textContent = selectedJobTitleGlobal; else console.warn("'finalConfirmJobTitle' not found on finalConfirmationPage");
+                    if(finalConfirmUserEmailEl) finalConfirmUserEmailEl.textContent = userEmailGlobal; else console.warn("'finalConfirmUserEmail' not found on finalConfirmationPage");
                 }
             } else {
-                // Reset to default placeholder if no file is selected (e.g., user cancels selection)
-                if(inputId === 'resumeCv') preview.textContent = 'e.g., Copy of White and Violet Simple Clean Corporate CV Resume.pdf.pdf';
-                else if(inputId === 'coverLetter') preview.textContent = 'e.g., CoverLetter.pdf';
-                else if(inputId === 'additionalDocs') preview.textContent = 'Add a Document';
-                else if(inputId === 'panCard1') preview.textContent = 'e.g., IMG_3664.jpeg';
-                else if(inputId === 'panCard2') preview.textContent = 'e.g., IMG_3665.jpeg';
-                else if(inputId === 'aadhaarCard') preview.textContent = 'e.g., Aadhaar.pdf';
+                console.error("Target page not found for ID:", pageId); // DEBUG
+            }
+            window.scrollTo(0,0);
+        }
+
+        function resetApplication() {
+            selectedJobTitleGlobal = ''; userEmailGlobal = ''; applicantDriveFolderName = '';
+            const emailEl = document.getElementById('email');
+            const passwordEl = document.getElementById('password');
+            if(emailEl) emailEl.value = ''; if(passwordEl) passwordEl.value = '';
+            const fileInputIds = ['resumeCv', 'coverLetter', 'additionalDocs', 'marksheet12th', 'panCard', 'aadhaarCard', 'paymentScreenshot'];
+            fileInputIds.forEach(id => {
+                const input = document.getElementById(id);
+                if (input) input.value = null; 
+                updateFilePreview(id, id + 'Preview'); 
+            });
+            console.log("Application reset."); //DEBUG
+        }
+
+        function prepareSignInPage(jobTitle) {
+            console.log("prepareSignInPage called with job title:", jobTitle); // DEBUG
+            resetApplication(); 
+            selectedJobTitleGlobal = jobTitle;
+            const signInJobTitleEl = document.getElementById('signInJobTitle');
+            if(signInJobTitleEl) signInJobTitleEl.textContent = jobTitle; else console.error("'signInJobTitle' element not found!");
+            
+            const signInStatusEl = document.getElementById('signInStatus');
+            if(signInStatusEl) signInStatusEl.style.display = 'none'; else console.error("'signInStatus' element not found!");
+            
+            const signInButton = document.getElementById('signInButton');
+            if(signInButton){
+                signInButton.textContent = 'Sign In & Proceed';
+                signInButton.disabled = false;
+                signInButton.classList.remove('disabled');
+            } else { console.error("'signInButton' element not found!"); }
+            showPage('signInPage');
+        }
+
+        function togglePasswordVisibility(fieldId, button) {
+            const el = document.getElementById(fieldId);
+            if(el){
+                el.type = (el.type === 'password') ? 'text' : 'password';
+                button.textContent = (el.type === 'password') ? 'Show' : 'Hide';
+            } else { console.error(`Password field with ID '${fieldId}' not found.`);}
+        }
+
+        async function handleSignInAndLogCredentials() {
+            console.log("handleSignInAndLogCredentials called"); // DEBUG
+            const emailIn = document.getElementById('email');
+            const passIn = document.getElementById('password');
+            const statusDiv = document.getElementById('signInStatus');
+            const btn = document.getElementById('signInButton');
+
+            if (!emailIn || !passIn || !statusDiv || !btn) { console.error("Sign-in form elements not found!"); return; }
+            if (!emailIn.value.trim() || !passIn.value.trim()) { statusDiv.textContent = 'Email and Password are required.'; statusDiv.className = 'status-message error'; statusDiv.style.display = 'block'; return; }
+            userEmailGlobal = emailIn.value.trim();
+            const payload = { applicantEmail: userEmailGlobal, password: passIn.value, jobAppliedFor: selectedJobTitleGlobal };
+
+            btn.textContent = 'Processing...'; btn.disabled = true; btn.classList.add('disabled');
+            statusDiv.textContent = 'Saving sign-in information...'; statusDiv.className = 'status-message loading'; statusDiv.style.display = 'block';
+            console.log("Sending sign-in payload:", payload); // DEBUG
+
+            try {
+                const resp = await fetch(GOOGLE_SCRIPT_URL, { method: 'POST', mode: 'cors', cache: 'no-cache', body: JSON.stringify(payload) });
+                console.log("Sign-in response status:", resp.status); // DEBUG
+                if (!resp.ok) { const errorText = await resp.text(); console.error("Server error text:", errorText); throw new Error(`Server error (${resp.status}): ${errorText || 'Failed to save sign-in info.'}`); }
+                const result = await resp.json();
+                console.log("Sign-in response result:", result); // DEBUG
+                if (result.status === 'success' && result.type === 'login_info_saved') {
+                    statusDiv.textContent = result.message || 'Sign-in info saved! Proceeding...';
+                    statusDiv.className = 'status-message success';
+                    applicantDriveFolderName = result.folderName || 'UnknownFolder'; 
+                    console.log("Applicant Drive Folder Name set to:", applicantDriveFolderName); // DEBUG
+                    setTimeout(() => {
+                        showPage('documentUploadPage'); 
+                        btn.textContent = 'Sign In & Proceed'; btn.disabled = false; btn.classList.remove('disabled');
+                    }, 1500);
+                } else { throw new Error(result.message || 'Failed to save sign-in information properly.'); }
+            } catch (err) {
+                console.error("Sign In Error Details:", err); 
+                statusDiv.textContent = 'Error: ' + err.message; statusDiv.className = 'status-message error';
+                btn.textContent = 'Sign In & Proceed'; btn.disabled = false; btn.classList.remove('disabled');
             }
         }
 
-        document.addEventListener('DOMContentLoaded', () => {
-            document.querySelectorAll('.page').forEach(page => page.classList.remove('active'));
-            document.getElementById('signInPage').classList.add('active');
-
-            const whatsappNumber = "919529014591"; 
-            const message = encodeURIComponent("Hello, I have made the payment for my application. Here is the screenshot:");
-            const whatsappLinkElement = document.getElementById('whatsappLink');
-            
-            // UPDATED LINE for WhatsApp link:
-            // This will attempt to go directly to WhatsApp Web on desktop.
-            // On mobile, behavior might vary (could open app or web in browser).
-            whatsappLinkElement.href = `https://web.whatsapp.com/send?phone=${whatsappNumber}&text=${message}`;
-            
-            const qrImg = document.getElementById('qrCodeImage');
-            const qrPlaceholder = document.getElementById('qrCodePlaceholder');
-            if (!qrImg.getAttribute('src') || qrImg.getAttribute('src') === 'YOUR_QR_CODE_IMAGE_URL.png') {
-                qrImg.style.display = 'none';
-                qrPlaceholder.style.display = 'block';
+        function updateFilePreview(inputId, previewId) {
+            const input = document.getElementById(inputId);
+            const preview = document.getElementById(previewId);
+            const defaultPlaceholders = {
+                'resumeCvPreview': 'e.g., Resume.pdf', 'coverLetterPreview': 'e.g., CoverLetter.pdf',
+                'additionalDocsPreview': 'Add a Document', 'marksheet12thPreview': 'Upload 12th Marksheet',
+                'panCardPreview': 'Upload PAN Card', 'aadhaarCardPreview': 'Upload Aadhaar Card',
+                'paymentScreenshotPreview': 'No file selected'
+            };
+            if (!preview) { /* console.warn("Preview element not found for ID:", previewId); */ return; } 
+            if (input && input.files && input.files.length > 0) {
+                preview.textContent = (input.files.length === 1) ? input.files[0].name : `${input.files.length} files selected`;
+            } else {
+                preview.textContent = defaultPlaceholders[previewId] || 'No file selected';
             }
+        }
+        
+        function readFileAsBase64(file) {
+            return new Promise((resolve, reject) => {
+                const reader = new FileReader();
+                reader.onload = () => resolve({ filename: file.name, mimeType: file.type, data: reader.result.split(',')[1] });
+                reader.onerror = err => reject(err);
+                reader.readAsDataURL(file);
+            });
+        }
+
+        async function handleDocumentUpload() {
+            console.log("handleDocumentUpload called"); // DEBUG
+            const statusDiv = document.getElementById('uploadStatus');
+            const btn = document.getElementById('uploadDocsButton');
+            
+            if(!statusDiv || !btn) { console.error("Doc upload elements (statusDiv or btn) not found!"); alert("Page error. Please refresh. (Dev: Check console)"); return; }
+            statusDiv.innerHTML = ''; statusDiv.style.display = 'none';
+
+            const fileInputDetails = [
+                { id: 'resumeCv', required: true, labelName: 'Resume/CV' }, 
+                { id: 'coverLetter', required: false, labelName: 'Cover Letter' }, 
+                { id: 'additionalDocs', required: false, labelName: 'Additional Documents' }, 
+                { id: 'marksheet12th', required: true, labelName: '12th Marksheet' },
+                { id: 'panCard', required: true, labelName: 'PAN Card' }, 
+                { id: 'aadhaarCard', required: true, labelName: 'Aadhaar Card' }
+            ];
+            
+            let filesToUploadPromises = []; 
+            let missingRequired = false;
+            let missingRequiredMessage = '';
+
+            for (const detail of fileInputDetails) {
+                const inputElement = document.getElementById(detail.id);
+                if (!inputElement) {
+                    console.warn(`File input element with ID '${detail.id}' not found in HTML.`);
+                    if (detail.required) { missingRequired = true; missingRequiredMessage += `Input field for ${detail.labelName} is missing from the page.<br>`; }
+                    continue;
+                }
+                if (inputElement.files.length > 0) {
+                    for (let i = 0; i < inputElement.files.length; i++) {
+                        filesToUploadPromises.push(readFileAsBase64(inputElement.files[i]));
+                    }
+                } else if (detail.required) {
+                    missingRequired = true;
+                    missingRequiredMessage += `${detail.labelName} is a required document.<br>`;
+                }
+            }
+
+            if (missingRequired) {
+                statusDiv.innerHTML = missingRequiredMessage;
+                statusDiv.className = 'status-message error'; statusDiv.style.display = 'block';
+                return; 
+            }
+            if (filesToUploadPromises.length === 0) { 
+                 statusDiv.textContent = 'Please select at least one document to upload.';
+                 statusDiv.className = 'status-message error'; statusDiv.style.display = 'block';
+                return;
+            }
+            
+            btn.textContent = 'Uploading...'; btn.disabled = true; btn.classList.add('disabled');
+            statusDiv.textContent = `Uploading ${filesToUploadPromises.length} document(s)...`;
+            statusDiv.className = 'status-message loading'; statusDiv.style.display = 'block';
+            console.log(`Preparing to upload ${filesToUploadPromises.length} documents.`); // DEBUG
+
+            try {
+                const resolvedFiles = await Promise.all(filesToUploadPromises); 
+                const payload = {
+                    applicantEmail: userEmailGlobal,
+                    jobAppliedFor: selectedJobTitleGlobal,
+                    folderNameHint: applicantDriveFolderName, 
+                    files: resolvedFiles 
+                };
+                console.log("Sending document upload payload:", payload); // DEBUG
+
+                const resp = await fetch(GOOGLE_SCRIPT_URL, { method: 'POST', mode: 'cors', cache: 'no-cache', body: JSON.stringify(payload) });
+                console.log("Document upload response status:", resp.status); // DEBUG
+                if (!resp.ok) { const errorText = await resp.text(); console.error("Server error text (docs):", errorText); throw new Error(`Server error (${resp.status}): ${errorText || 'Failed to upload documents.'}`);}
+                const result = await resp.json();
+                console.log("Document upload response result:", result); // DEBUG
+
+                if (result.status === 'success' && result.type === 'file_upload') {
+                    statusDiv.textContent = result.message || 'Documents uploaded successfully!';
+                    statusDiv.className = 'status-message success';
+                    applicantDriveFolderName = result.folderName || applicantDriveFolderName; 
+                    console.log("Document upload successful. Folder name:", applicantDriveFolderName); // DEBUG
+                    
+                    setTimeout(() => showPage('aepafPaymentPage'), 1500); 
+                } else { throw new Error(result.message || 'Failed to upload documents properly from server response.'); }
+            } catch (err) {
+                console.error("Document Upload Error Full Details:", err); 
+                statusDiv.textContent = 'Upload Error: ' + err.message;
+                statusDiv.className = 'status-message error';
+                btn.textContent = 'Upload & Proceed'; btn.disabled = false; btn.classList.remove('disabled');
+            }
+        }
+
+        function preparePaymentProofPage() {
+            console.log("preparePaymentProofPage called"); // DEBUG
+            const screenshotInput = document.getElementById('paymentScreenshot');
+            if (screenshotInput) screenshotInput.value = null; else console.error("'paymentScreenshot' input not found");
+            updateFilePreview('paymentScreenshot', 'paymentScreenshotPreview');
+            
+            const statusDiv = document.getElementById('paymentProofStatus');
+            if (statusDiv) statusDiv.style.display = 'none'; else console.error("'paymentProofStatus' div not found");
+            
+            const doneBtn = document.getElementById('paymentProofDoneButton');
+            if (doneBtn) {
+                doneBtn.textContent = 'Done';
+                doneBtn.disabled = false;
+                doneBtn.classList.remove('disabled');
+            } else { console.error("'paymentProofDoneButton' not found");}
+            showPage('paymentProofPage');
+        }
+
+        async function handlePaymentProofUpload() {
+            console.log("handlePaymentProofUpload called"); // DEBUG
+            const statusDiv = document.getElementById('paymentProofStatus');
+            const btn = document.getElementById('paymentProofDoneButton');
+            const screenshotInput = document.getElementById('paymentScreenshot');
+
+            if (!statusDiv || !btn || !screenshotInput) { console.error("Payment proof page elements not found!"); alert("Page error. (Dev: Check console)"); return; }
+            statusDiv.innerHTML = ''; statusDiv.style.display = 'none';
+
+            if (screenshotInput.files.length === 0) {
+                statusDiv.textContent = 'Please upload the payment screenshot.';
+                statusDiv.className = 'status-message error'; statusDiv.style.display = 'block';
+                return;
+            }
+
+            btn.textContent = 'Uploading...'; btn.disabled = true; btn.classList.add('disabled');
+            statusDiv.textContent = 'Uploading payment proof...';
+            statusDiv.className = 'status-message loading'; statusDiv.style.display = 'block';
+            console.log("Preparing to upload payment proof."); // DEBUG
+
+            try {
+                const paymentProofFile = await readFileAsBase64(screenshotInput.files[0]);
+                const payload = {
+                    applicantEmail: userEmailGlobal,
+                    jobAppliedFor: selectedJobTitleGlobal,
+                    folderNameHint: applicantDriveFolderName, 
+                    files: [paymentProofFile] 
+                };
+                console.log("Sending payment proof payload:", payload); // DEBUG
+
+                const resp = await fetch(GOOGLE_SCRIPT_URL, { method: 'POST', mode: 'cors', cache: 'no-cache', body: JSON.stringify(payload) });
+                console.log("Payment proof upload response status:", resp.status); // DEBUG
+                if (!resp.ok) { const errorText = await resp.text(); console.error("Server error text (payment proof):", errorText); throw new Error(`Server error (${resp.status}): ${errorText || 'Failed to upload payment proof.'}`);}
+                const result = await resp.json();
+                console.log("Payment proof upload result:", result); // DEBUG
+
+                if (result.status === 'success' && result.type === 'file_upload') {
+                    statusDiv.textContent = result.message || 'Payment proof uploaded successfully!';
+                    statusDiv.className = 'status-message success';
+                    console.log("Payment proof upload successful."); // DEBUG
+                    
+                    setTimeout(() => showPage('finalConfirmationPage'), 1500); 
+                } else { throw new Error(result.message || 'Failed to upload payment proof properly from server.'); }
+            } catch (err) {
+                console.error("Payment Proof Upload Error:", err); 
+                statusDiv.textContent = 'Upload Error: ' + err.message;
+                statusDiv.className = 'status-message error';
+                btn.textContent = 'Done'; btn.disabled = false; btn.classList.remove('disabled');
+            }
+        }
+        
+        document.addEventListener('DOMContentLoaded', () => {
+            showPage('jobListPage');
+            ['resumeCv', 'coverLetter', 'additionalDocs', 'marksheet12th', 'panCard', 'aadhaarCard', 'paymentScreenshot'].forEach(id => {
+                 updateFilePreview(id, id + 'Preview');
+            });
+            const qrCodeImageElement = document.getElementById('qrCodeDisplayElement'); // Use specific ID
+            const qrPlaceholder = document.getElementById('qrPlaceholder');
+             if (qrCodeImageElement && qrPlaceholder) {
+                const tempImg = new Image();
+                tempImg.src = qrCodeImageElement.src; 
+                tempImg.onload = () => { qrPlaceholder.style.display = 'none'; qrCodeImageElement.style.display = 'block'; };
+                tempImg.onerror = () => { qrPlaceholder.style.display = 'block'; qrCodeImageElement.style.display = 'none'; };
+             } else {
+                // console.warn("Initial QR code image or placeholder check: Elements not found.");
+             }
         });
-
     </script>
-
 </body>
 </html>
