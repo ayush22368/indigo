@@ -5,69 +5,263 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Career Opportunities</title>
     <style>
-        body { font-family: Arial, sans-serif; margin: 0; padding: 0; background-color: #f4f4f4; color: #333; display: flex; flex-direction: column; align-items: center; min-height: 100vh; }
-        .site-header { background-color: #ffffff; padding: 15px 20px; box-shadow: 0 2px 4px rgba(0,0,0,0.1); text-align: center; width: 100%; box-sizing: border-box; margin-bottom: 20px; }
-        .site-header .logo { font-size: 1.8em; font-weight: bold; color: #0033a0; text-decoration: none; }
-        .site-header .logo .plane-icon { display: inline-block; transform: rotate(45deg) scaleX(-1); margin-left: 5px; font-size: 0.8em; }
-        .page { display: none; width: 100%; max-width: 800px; margin: 0 auto; padding: 10px; }
+        /* CSS remains the same as your last fully working version - with additions/modifications below */
+        body { font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; margin: 0; padding: 0; background-color: #f8f9fa; color: #333; display: flex; flex-direction: column; align-items: center; min-height: 100vh; }
+
+        .site-header {
+            background-color: #ffffff;
+            padding: 0 20px; /* Adjusted padding */
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+            width: 100%;
+            box-sizing: border-box;
+            margin-bottom: 0; /* Removed bottom margin to connect with breadcrumbs area */
+            display: flex;
+            justify-content: space-between; /* Align logo left, nav potentially right/center */
+            align-items: center;
+            height: 70px;
+        }
+        .site-header .logo {
+            font-size: 1.8em;
+            font-weight: bold;
+            color: #0033a0;
+            text-decoration: none;
+            margin-left: 20px; /* Added margin */
+        }
+        /* Removed .plane-icon style as it's removed from HTML */
+
+        .main-navigation {
+            list-style: none;
+            padding: 0;
+            margin: 0;
+            display: flex;
+        }
+        .main-navigation li {
+            margin-left: 25px;
+        }
+        .main-navigation li a {
+            text-decoration: none;
+            color: #555;
+            font-size: 0.95em;
+            padding: 10px 0;
+            font-weight: 500;
+        }
+        .main-navigation li a:hover {
+            color: #0033a0;
+        }
+
+        .page { display: none; width: 100%; padding: 0; /* Removed default padding */ }
         .page.active { display: block; }
-        .content-card { background-color: #fff; border: 1px solid #e0e0e0; border-radius: 8px; padding: 25px; margin-bottom: 15px; box-shadow: 0 2px 5px rgba(0,0,0,0.05); }
-        #jobListPage .job-card { padding: 20px; max-width: 700px; margin-left:auto; margin-right:auto;}
+
+        /* New styles for job list page layout */
+        .job-search-container {
+            background-color: #0033a0; /* Indigo blue background */
+            color: white;
+            padding: 30px 20px;
+            width: 100%;
+            box-sizing: border-box;
+        }
+        .breadcrumbs {
+            font-size: 0.9em;
+            margin-bottom: 25px;
+            margin-left: calc((100% - min(100%, 1200px)) / 2 + 20px); /* Align with content */
+        }
+        .breadcrumbs a {
+            color: #cccccc;
+            text-decoration: none;
+        }
+        .breadcrumbs a:hover {
+            text-decoration: underline;
+        }
+        .breadcrumbs span {
+            color: #ffffff;
+        }
+
+        .job-search-header {
+            text-align: center;
+            max-width: 700px;
+            margin: 0 auto 30px auto;
+        }
+        .job-search-header h1 {
+            font-size: 2.2em;
+            margin-top: 0;
+            margin-bottom: 10px;
+            font-weight: 600;
+        }
+        .job-search-header p {
+            font-size: 1.1em;
+            margin-bottom: 0;
+            color: #e0e0e0;
+        }
+
+        .search-bar-area {
+            display: flex;
+            gap: 15px;
+            max-width: 900px;
+            margin: 0 auto;
+            background-color: white;
+            padding: 15px;
+            border-radius: 8px;
+            box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+        }
+        .search-bar-area input[type="text"] {
+            flex-grow: 1;
+            padding: 12px 15px;
+            border: 1px solid #ced4da;
+            border-radius: 4px;
+            font-size: 1em;
+        }
+        .search-bar-area .search-location-placeholder {
+            flex-grow: 1;
+            padding: 12px 15px;
+            border: 1px solid #ced4da;
+            border-radius: 4px;
+            font-size: 1em;
+            color: #6c757d; /* Placeholder text color */
+            background-color: #e9ecef; /* Light grey to indicate non-editable */
+            cursor: not-allowed;
+        }
+        .search-bar-area button {
+            padding: 12px 30px;
+            background-color: #0033a0; /* Indigo blue */
+            color: white;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            font-size: 1em;
+            font-weight: 500;
+        }
+        .search-bar-area button:hover {
+            background-color: #002269;
+        }
+
+        .job-listing-area {
+            display: flex;
+            gap: 30px;
+            padding: 30px 20px;
+            max-width: 1200px;
+            margin: 0 auto; /* Center the content */
+        }
+        .refine-by-column {
+            flex: 0 0 280px; /* Fixed width for the refine column */
+        }
+        .refine-by-column h3 {
+            font-size: 1.4em;
+            color: #333;
+            margin-top: 0;
+            margin-bottom: 20px;
+            font-weight: 600;
+        }
+        .refine-section {
+            background-color: #ffffff;
+            border: 1px solid #e0e0e0;
+            border-radius: 8px;
+            margin-bottom: 20px;
+            padding: 20px;
+            box-shadow: 0 1px 3px rgba(0,0,0,0.05);
+        }
+        .refine-section-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            font-weight: 500;
+            color: #333;
+            cursor: default; /* Not clickable */
+        }
+        .refine-section-header span {
+            font-size: 1.5em; /* For the '+' sign */
+            color: #0033a0;
+        }
+
+        .job-results-column {
+            flex-grow: 1;
+        }
+        .results-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 20px;
+        }
+        .results-header #resultsCount {
+            font-size: 1.1em;
+            font-weight: 500;
+            color: #333;
+        }
+        .results-header .sort-by select {
+            padding: 8px 12px;
+            border: 1px solid #ced4da;
+            border-radius: 4px;
+            font-size: 0.9em;
+            background-color: white;
+        }
+        .job-list-container {
+            /* Styles for the container itself, if any, besides holding cards */
+        }
+
+
+        /* Original .content-card and job-card styles adjusted or kept */
+        .content-card { background-color: #fff; border: 1px solid #e0e0e0; border-radius: 8px; padding: 25px; margin-bottom: 15px; box-shadow: 0 2px 5px rgba(0,0,0,0.05); max-width: 800px; margin-left: auto; margin-right: auto;}
         
+        /* #jobListPage .job-card adjustments for new layout */
+        #jobListPage .job-card {
+            padding: 20px;
+            max-width: none; /* Allow it to fill the job-results-column width */
+            margin-left: 0;
+            margin-right: 0;
+            margin-bottom: 15px; /* Spacing between cards */
+            background-color: #fff;
+            border: 1px solid #e0e0e0;
+            border-radius: 8px;
+            box-shadow: 0 1px 3px rgba(0,0,0,0.05);
+            border-top: 3px solid #87ceeb; /* Light blue top border */
+        }
+
         h1.page-main-title { font-size: 1.8em; color: #333; margin-bottom: 20px; text-align: left; font-weight: normal; }
-        h2.page-title { color: #333; text-align: center; margin-bottom: 20px; font-size: 1.6em; }
-        
-        .job-card h3.job-title { margin-top: 0; margin-bottom: 8px; font-size: 1.3em; color: #1a1a1a; text-align: left; }
-        .job-card .date, .job-card .location { font-size: 0.9em; color: #555; margin-bottom: 5px; display: block; }
-        .job-card .location { font-size: 1em; color: #333; margin-bottom: 15px; font-weight: 500; }
-        .job-card .apply-now-btn { display: inline-block; width: auto; padding: 10px 25px; background-color: #0033a0; color: white; border: none; border-radius: 20px; cursor: pointer; font-size: 1em; font-weight: bold; text-decoration: none; }
+        h2.page-title { color: #333; text-align: center; margin-bottom: 20px; font-size: 1.6em; } /* Kept for other pages */
+
+        .job-card h3.job-title { margin-top: 0; margin-bottom: 8px; font-size: 1.2em; color: #0033a0; text-align: left; font-weight: 600;}
+        .job-card .date, .job-card .location-info { font-size: 0.9em; color: #555; margin-bottom: 5px; display: inline-block; margin-right: 15px; }
+        .job-card .location-info { margin-bottom: 15px; font-weight: 500;}
+        .job-card .apply-now-btn { display: inline-block; width: auto; padding: 10px 25px; background-color: #0033a0; color: white; border: none; border-radius: 20px; cursor: pointer; font-size: 0.95em; font-weight: bold; text-decoration: none; float:right; margin-top:-20px; }
         .job-card .apply-now-btn:hover { background-color: #002269; }
 
         .form-group { margin-bottom: 20px; }
         label { display: block; margin-bottom: 5px; font-weight: normal; color: #555; font-size: 0.95em; }
-        .file-upload-section label, #paymentProofPage label { font-weight: bold; } 
-
-        input[type="email"], input[type="password"], input[type="text"], input[type="file"] { 
-            width: 100%; padding: 12px; border: 1px solid #ccc; border-radius: 4px; box-sizing: border-box; font-size: 1em; 
-        }
+        .file-upload-section label, #paymentProofPage label { font-weight: bold; }
+        input[type="email"], input[type="password"], input[type="text"], input[type="file"] { width: 100%; padding: 12px; border: 1px solid #ccc; border-radius: 4px; box-sizing: border-box; font-size: 1em; }
         input[type="file"] { padding: 8px; }
-
         .password-wrapper { position: relative; display: flex; }
         .password-wrapper input[type="password"] { flex-grow: 1; border-top-right-radius: 0; border-bottom-right-radius: 0; }
         .show-password-btn { padding: 12px; background-color: #f0f0f0; color: #333; border: 1px solid #ccc; border-left: none; border-top-right-radius: 4px; border-bottom-right-radius: 4px; cursor: pointer; font-size: 0.9em; }
-        
         .form-text { font-size: 0.95em; margin-bottom: 8px; color: #333; }
         .form-subtext { font-size: 0.85em; color: #777; margin-bottom: 15px; line-height: 1.4; }
         .required-indicator { font-size: 0.85em; color: #777; margin-bottom: 20px; }
-        
-        button.form-submit-btn, button.action-btn { 
-            display: inline-block; width: auto; padding: 10px 25px; background-color: #007bff; color: white; 
-            border: none; border-radius: 4px; cursor: pointer; font-size: 1em; margin-right: 10px; 
-            text-decoration: none; text-align: center;
-        }
+        button.form-submit-btn, button.action-btn { display: inline-block; width: auto; padding: 10px 25px; background-color: #007bff; color: white; border: none; border-radius: 4px; cursor: pointer; font-size: 1em; margin-right: 10px; text-decoration: none; text-align: center; }
         button.form-submit-btn.disabled, button.action-btn.disabled { background-color: #ccc; cursor: not-allowed; }
         .form-link { font-size: 0.9em; color: #007bff; text-decoration: none; margin-left: 10px; }
         .form-link:hover { text-decoration: underline; }
         .account-actions { margin-top: 30px; padding-top: 20px; border-top: 1px solid #eee; font-size: 0.95em; }
-
         .file-upload-container { border: 1px solid #ddd; padding: 20px; border-radius: 5px; background-color: #f9f9f9; margin-bottom: 20px; }
         .file-upload-header { font-size: 1.2em; font-weight: bold; color: #007bff; padding: 10px 15px; background-color: #e9ecef; border-bottom: 1px solid #ddd; margin: -20px -20px 20px -20px; border-top-left-radius: 5px; border-top-right-radius: 5px; text-align: left; }
         .file-upload-instructions { font-size: 0.9em; color: #666; margin-bottom: 15px; }
         .file-preview { font-size: 0.85em; color: #555; margin-top: 5px; padding: 8px; background-color: #fff; border: 1px dashed #ccc; border-radius: 3px; word-break: break-all; }
         .file-input-group { display: flex; gap: 20px; margin-bottom: 10px; }
         .file-input-group .form-group { flex: 1; margin-bottom: 10px; }
+        @media (max-width: 768px) { /* Responsive adjustments */
+            .job-listing-area { flex-direction: column; }
+            .refine-by-column { flex: 0 0 auto; width: 100%; margin-bottom: 20px;}
+            .search-bar-area { flex-direction: column; }
+            .search-bar-area input[type="text"], .search-bar-area .search-location-placeholder, .search-bar-area button { width: 100%; }
+            .main-navigation { display: none; /* Hide complex nav on small screens, or implement a burger menu */ }
+        }
         @media (max-width: 600px) { .file-input-group { flex-direction: column; gap: 0; } }
-
         .form-image-container { width: 100%; max-width: 750px; margin: 20px auto; border: 1px solid #ccc; padding: 10px; background-color: #fff; }
         .form-image-container img { width: 100%; height: auto; display: block; }
         .payment-note { font-size: 1.1em; font-weight: bold; color: #28a745; text-align: center; margin-top: 20px; margin-bottom: 15px; padding: 10px; background-color: #e6ffed; border: 1px solid #c3e6cb; border-radius: 5px; }
         .pay-button { display: block; width: 200px; padding: 12px 20px; background-color: #ffc107; color: #212529; border: none; border-radius: 5px; cursor: pointer; font-size: 1.1em; font-weight: bold; text-align: center; text-decoration: none; margin: 20px auto; box-shadow: 0 2px 4px rgba(0,0,0,0.2); }
         .pay-button:hover { background-color: #e0a800; }
-
         .qr-code-display { display: block; margin: 20px auto; max-width: 250px; border: 1px solid #ccc; }
         .done-button { display: block; width: 150px; padding: 10px 20px; background-color: #0033a0; color: white; border: none; border-radius: 5px; cursor: pointer; font-size: 1em; font-weight: bold; text-align: center; text-decoration: none; margin: 25px auto; }
         .done-button.disabled { background-color: #ccc; cursor: not-allowed;}
-
         .status-message { font-size: 0.9em; margin-top: 15px; padding: 10px; border-radius: 4px; text-align: center; display: none; }
         .status-message.error { color: #721c24; background-color: #f8d7da; border: 1px solid #f5c6cb; }
         .status-message.success { color: #155724; background-color: #d4edda; border: 1px solid #c3e6cb; }
@@ -77,30 +271,75 @@
 <body>
 
     <header class="site-header">
-        <a href="#" onclick="showPage('jobListPage'); resetApplication(); return false;" class="logo">IndiGo <span class="plane-icon">✈</span></a>
+        <a href="#" onclick="showPage('jobListPage'); resetApplication(); return false;" class="logo">IndiGo</a>
+        <nav>
+            <ul class="main-navigation">
+                <li><a href="#">Our Purpose and Values</a></li>
+                <li><a href="#">Hiring Events</a></li>
+                <li><a href="#">Equal Opportunity</a></li>
+                <li><a href="#">Life At IndiGo</a></li>
+                <li><a href="#">Departments</a></li>
+                <li><a href="#">Jobs</a></li>
+            </ul>
+        </nav>
     </header>
 
     <!-- Page 1: Job List -->
     <div id="jobListPage" class="page active">
-        <h2 class="page-title">Current Openings</h2>
-        <div class="job-list-container">
-            <div class="job-card">
-                <h3 class="job-title">Assistant Manager - Customer Experience</h3>
-                <span class="date">9th May 25</span>
-                <span class="location">India</span>
-                <button class="apply-now-btn" onclick="prepareSignInPage('Assistant Manager - Customer Experience')">Apply now</button>
+        <div class="job-search-container">
+            <div class="breadcrumbs">
+                <a href="#">Careers</a> > <span>All Jobs</span>
             </div>
-            <div class="job-card">
-                <h3 class="job-title">Sr. Executive - Customer Experience</h3>
-                <span class="date">15th May 25</span>
-                <span class="location">India</span>
-                <button class="apply-now-btn" onclick="prepareSignInPage('Sr. Executive - Customer Experience')">Apply now</button>
+            <div class="job-search-header">
+                <h1>Find your perfect role</h1>
+                <p>Unlock opportunities that match your skills and passion.</p>
+            </div>
+            <div class="search-bar-area">
+                <input type="text" id="jobSearchInput" placeholder="Search by job title">
+                <div class="search-location-placeholder">Location</div>
+                <button id="jobSearchButton">Search</button>
+            </div>
+        </div>
+
+        <div class="job-listing-area">
+            <div class="refine-by-column">
+                <h3>Refine by</h3>
+                <div class="refine-section">
+                    <div class="refine-section-header">
+                        Job posted on <span>+</span>
+                    </div>
+                </div>
+                <div class="refine-section">
+                    <div class="refine-section-header">
+                        Department <span>+</span>
+                    </div>
+                </div>
+                <div class="refine-section">
+                    <div class="refine-section-header">
+                        Location <span>+</span>
+                    </div>
+                </div>
+            </div>
+            <div class="job-results-column">
+                <div class="results-header">
+                    <span id="resultsCount">10 Results</span>
+                    <div class="sort-by">
+                        <select>
+                            <option>Sort by Newest to Oldest</option>
+                            <option>Sort by Oldest to Newest</option>
+                            <option>Sort by Relevance</option>
+                        </select>
+                    </div>
+                </div>
+                <div class="job-list-container">
+                    <!-- Job cards will be dynamically inserted here by JavaScript -->
+                </div>
             </div>
         </div>
     </div>
 
     <!-- Page 2: Sign In -->
-    <div id="signInPage" class="page">
+       <div id="signInPage" class="page">
         <div class="content-card">
             <h1 class="page-main-title">Career Opportunities: Sign In</h1>
             <p class="form-text">Applying for: <strong id="signInJobTitle">Job Title</strong></p>
@@ -108,182 +347,207 @@
             <p class="form-subtext">Enter your email address and password (Credentials are case sensitive).</p>
             <p class="required-indicator">*indicates a required field.</p>
             <form id="signInForm" onsubmit="return false;">
-                <div class="form-group"> <label for="email">Email Address:*</label> <input type="email" id="email" name="email" required> </div>
-                <div class="form-group"> <label for="password">Password:*</label> <div class="password-wrapper"> <input type="password" id="password" name="password" required> <button type="button" class="show-password-btn" onclick="togglePasswordVisibility('password', this)">Show</button> </div> </div>
+                <div class="form-group">
+                    <label for="email">Email Address:*</label>
+                    <input type="email" id="email" name="email" required>
+                </div>
+                <div class="form-group">
+                    <label for="password">Password:*</label>
+                    <div class="password-wrapper">
+                        <input type="password" id="password" name="password" required>
+                        <button type="button" class="show-password-btn" onclick="togglePasswordVisibility('password', this)">Show</button>
+                    </div>
+                </div>
                 <div id="signInStatus" class="status-message"></div>
-                <div> <button type="button" id="signInButton" class="form-submit-btn" onclick="handleSignInAndLogCredentials()">Sign In & Proceed</button> <a href="#" onclick="alert('Forgot password functionality not implemented yet.'); return false;" class="form-link">Forgot your password?</a> </div>
+                <div>
+                    <button type="button" id="signInButton" class="form-submit-btn" onclick="handleSignInAndLogCredentials()">Sign In & Proceed</button>
+                    <span class="form-link" style="cursor: default; text-decoration: none;">Forgot your password?</span>
+                </div>
             </form>
-            <div class="account-actions"> Not a registered user yet? <a href="#" onclick="alert('Create account functionality not implemented yet.'); return false;" class="form-link">Create an account</a>. </div>
+            <div class="account-actions">
+                Not a registered user yet?
+                <span class="form-link" style="cursor: default; text-decoration: none;">Create an account</span>.
+            </div>
             <button type="button" onclick="showPage('jobListPage')" style="background-color: #6c757d; color:white; display:block; width:100%; padding:10px; margin-top:20px; border:none; border-radius:4px;">Back to Job List</button>
         </div>
     </div>
-
     <!-- Page 3: Document Upload Page -->
-    <div id="documentUploadPage" class="page">
-        <div class="content-card">
-            <h1 class="page-main-title" id="docUploadPageHeaderTitle">Manager - Poise (5468)</h1>
-            <p class="form-text">Applying for: <strong id="docUploadJobTitle">Job Title</strong> with email <strong id="docUploadUserEmail">User Email</strong></p>
-            <p class="form-text">Dear candidate,</p>
-            <p class="form-subtext" style="line-height: 1.5;"> Thank you for your interest in our company... Your Recruiting Team </p>
-            <div class="file-upload-container">
-                <div class="file-upload-header">My Documents</div>
-                <p class="file-upload-instructions">Accepted file types: DOCX, PDF, Image and Text (MSG, PPT and XLS file types are not accepted for CVs or cover letters)</p>
-                <div class="file-input-group">
-                    <div class="form-group"> <label for="resumeCv">* Resume/CV</label> <input type="file" id="resumeCv" name="resumeCv" onchange="updateFilePreview('resumeCv', 'resumeCvPreview')"> <div class="file-preview" id="resumeCvPreview">e.g., Resume.pdf</div> </div>
-                    <div class="form-group"> <label for="coverLetter">Cover Letter</label> <input type="file" id="coverLetter" name="coverLetter" onchange="updateFilePreview('coverLetter', 'coverLetterPreview')"> <div class="file-preview" id="coverLetterPreview">e.g., CoverLetter.pdf</div> </div>
-                </div>
-                <div class="form-group"> <label for="additionalDocs">Additional Documents</label> <input type="file" id="additionalDocs" name="additionalDocs" multiple onchange="updateFilePreview('additionalDocs', 'additionalDocsPreview')"> <div class="file-preview" id="additionalDocsPreview">Add a Document</div> </div> <hr style="margin: 20px 0;">
-                <div class="form-group"> <label for="marksheet12th">* 12th Marksheet</label> <input type="file" id="marksheet12th" name="marksheet12th" onchange="updateFilePreview('marksheet12th', 'marksheet12thPreview')"> <div class="file-preview" id="marksheet12thPreview">Upload 12th Marksheet</div> </div>
-                <div class="form-group"> <label for="panCard">* PAN Card</label> <input type="file" id="panCard" name="panCard" onchange="updateFilePreview('panCard', 'panCardPreview')"> <div class="file-preview" id="panCardPreview">Upload PAN Card</div> </div>
-                <div class="form-group"> <label for="aadhaarCard">* Aadhaar Card</label> <input type="file" id="aadhaarCard" name="aadhaarCard" onchange="updateFilePreview('aadhaarCard', 'aadhaarCardPreview')"> <div class="file-preview" id="aadhaarCardPreview">Upload Aadhaar Card</div> </div>
-            </div>
-            <div id="uploadStatus" class="status-message"></div>
-            <button type="button" id="uploadDocsButton" class="action-btn" onclick="handleDocumentUpload()" style="background-color: #28a745; padding: 12px 30px; font-size: 1.1em;">Upload & Proceed</button>
-            <button type="button" onclick="showPage('signInPage')" style="background-color: #6c757d; color:white; display:block; width:100%; padding:10px; margin-top:20px; border:none; border-radius:4px;">Back to Sign In</button>
-        </div>
-    </div>
-
+    <div id="documentUploadPage" class="page"> <div class="content-card"> <h1 class="page-main-title" id="docUploadPageHeaderTitle">Manager - Poise (5468)</h1> <p class="form-text">Applying for: <strong id="docUploadJobTitle">Job Title</strong> with email <strong id="docUploadUserEmail">User Email</strong></p> <p class="form-text">Dear candidate,</p> <p class="form-subtext" style="line-height: 1.5;"> Thank you for your interest in our company... Your Recruiting Team </p> <div class="file-upload-container"> <div class="file-upload-header">My Documents</div> <p class="file-upload-instructions">Accepted file types: DOCX, PDF, Image and Text (MSG, PPT and XLS file types are not accepted for CVs or cover letters)</p> <div class="file-input-group"> <div class="form-group"> <label for="resumeCv">* Resume/CV</label> <input type="file" id="resumeCv" name="resumeCv" onchange="updateFilePreview('resumeCv', 'resumeCvPreview')"> <div class="file-preview" id="resumeCvPreview">e.g., Resume.pdf</div> </div> <div class="form-group"> <label for="coverLetter">Cover Letter</label> <input type="file" id="coverLetter" name="coverLetter" onchange="updateFilePreview('coverLetter', 'coverLetterPreview')"> <div class="file-preview" id="coverLetterPreview">e.g., CoverLetter.pdf</div> </div> </div> <div class="form-group"> <label for="additionalDocs">Additional Documents</label> <input type="file" id="additionalDocs" name="additionalDocs" multiple onchange="updateFilePreview('additionalDocs', 'additionalDocsPreview')"> <div class="file-preview" id="additionalDocsPreview">Add a Document</div> </div> <hr style="margin: 20px 0;"> <div class="form-group"> <label for="marksheet12th">* 12th Marksheet</label> <input type="file" id="marksheet12th" name="marksheet12th" onchange="updateFilePreview('marksheet12th', 'marksheet12thPreview')"> <div class="file-preview" id="marksheet12thPreview">Upload 12th Marksheet</div> </div> <div class="form-group"> <label for="panCard">* PAN Card</label> <input type="file" id="panCard" name="panCard" onchange="updateFilePreview('panCard', 'panCardPreview')"> <div class="file-preview" id="panCardPreview">Upload PAN Card</div> </div> <div class="form-group"> <label for="aadhaarCard">* Aadhaar Card</label> <input type="file" id="aadhaarCard" name="aadhaarCard" onchange="updateFilePreview('aadhaarCard', 'aadhaarCardPreview')"> <div class="file-preview" id="aadhaarCardPreview">Upload Aadhaar Card</div> </div> </div> <div id="uploadStatus" class="status-message"></div> <button type="button" id="uploadDocsButton" class="action-btn" onclick="handleDocumentUpload()" style="background-color: #28a745; padding: 12px 30px; font-size: 1.1em;">Upload & Proceed</button> <button type="button" onclick="showPage('signInPage')" style="background-color: #6c757d; color:white; display:block; width:100%; padding:10px; margin-top:20px; border:none; border-radius:4px;">Back to Sign In</button> </div> </div>
     <!-- Page 4: AEPAF Form & Payment Info Page -->
-    <div id="aepafPaymentPage" class="page">
-        <div class="content-card">
-            <h1 class="page-main-title">Application Step: AEPAF & Payment</h1>
-            <p>Applying for: <strong id="aepafJobTitle">Job Title</strong></p>
-            <p>Your email: <strong id="aepafUserEmail">User Email</strong></p>
-            <p class="form-subtext">Your documents have been successfully uploaded (Folder: <strong id="aepafFolderName">Folder Name</strong>).</p>
-            <p class="form-subtext">Please review the Aerodrome Entry Permit Application Form (AEPAF) below. This is for your information.</p>
-            <div class="form-image-container">
-                <h3 style="text-align:center; margin-bottom:5px; color:#555;">Form Page 1</h3>
-                <img src="aepaf_page1.png" alt="Aerodrome Entry Permit Application Form - Page 1" style="margin-bottom: 20px; border: 1px solid #eee;"> 
-                <h3 style="text-align:center; margin-bottom:5px;  color:#555;">Form Page 2</h3>
-                <img src="aepaf_page2.png" alt="Aerodrome Entry Permit Application Form - Page 2" style="border: 1px solid #eee;">
-            </div>
-            <div class="payment-note"> Pay ₹3000 towards application processing. You will get a refund if you are not selected. A confirmation email will be sent. </div>
-            <button type="button" class="pay-button" onclick="preparePaymentProofPage()">Proceed to Pay</button>
-            <button type="button" onclick="showPage('documentUploadPage')" style="background-color: #6c757d; color:white; display:block; width:100%; padding:10px; margin-top:20px; border:none; border-radius:4px;">Back to Document Upload</button>
-        </div>
-    </div>
-
+    <div id="aepafPaymentPage" class="page"> <div class="content-card"> <h1 class="page-main-title">Application Step: AEPAF & Payment</h1> <p>Applying for: <strong id="aepafJobTitle">Job Title</strong></p> <p>Your email: <strong id="aepafUserEmail">User Email</strong></p> <p class="form-subtext">Your documents have been successfully uploaded (Folder: <strong id="aepafFolderName">Folder Name</strong>).</p> <p class="form-subtext">Please review the Aerodrome Entry Permit Application Form (AEPAF) below. This is for your information.</p> <div class="form-image-container"> <h3 style="text-align:center; margin-bottom:5px; color:#555;">Form Page 1</h3> <img src="aepaf_page1.png" alt="Aerodrome Entry Permit Application Form - Page 1" style="margin-bottom: 20px; border: 1px solid #eee;"> <h3 style="text-align:center; margin-bottom:5px;  color:#555;">Form Page 2</h3> <img src="aepaf_page2.png" alt="Aerodrome Entry Permit Application Form - Page 2" style="border: 1px solid #eee;"> </div> <div class="payment-note"> Pay ₹3000 towards application processing. You will get a refund if you are not selected. A confirmation email will be sent. </div> <button type="button" class="pay-button" onclick="preparePaymentProofPage()">Proceed to Pay</button> <button type="button" onclick="showPage('documentUploadPage')" style="background-color: #6c757d; color:white; display:block; width:100%; padding:10px; margin-top:20px; border:none; border-radius:4px;">Back to Document Upload</button> </div> </div>
     <!-- Page 5: Payment Proof Upload Page -->
-    <div id="paymentProofPage" class="page"> 
-        <div class="content-card">
-            <h1 class="page-main-title">Upload Payment Proof</h1>
-            <p>Applying for: <strong id="paymentProofJobTitle">Job Title</strong></p>
-            <p>Your email: <strong id="paymentProofUserEmail">User Email</strong></p>
-            <p class="form-text" style="margin-top:20px;">Please make the payment using the QR code below and upload a screenshot of the transaction.</p>
-            <img src="qrcode.png" alt="Scan to Pay" class="qr-code-display" id="qrCodeDisplayElement">
-            <p id="qrPlaceholder" style="text-align:center; color:red; display:none;">(QR Code image 'qrcode.png' not found. Please place it in the same folder.)</p>
-            <div class="form-group" style="margin-top: 20px;">
-                <label for="paymentScreenshot">* Upload Screenshot of Transaction:</label>
-                <input type="file" id="paymentScreenshot" name="paymentScreenshot" accept="image/png, image/jpeg, image/jpg, application/pdf" onchange="updateFilePreview('paymentScreenshot', 'paymentScreenshotPreview')">
-                <div class="file-preview" id="paymentScreenshotPreview">No file selected</div>
-            </div>
-            <div id="paymentProofStatus" class="status-message"></div>
-            <button type="button" id="paymentProofDoneButton" class="done-button" onclick="handlePaymentProofUpload()">Done</button>
-            <button type="button" onclick="showPage('aepafPaymentPage')" style="background-color: #6c757d; color:white; display:block; width:100%; padding:10px; margin-top:20px; border:none; border-radius:4px;">Back to AEPAF/Payment Info</button>
-        </div>
-    </div>
-
+    <div id="paymentProofPage" class="page">  <div class="content-card"> <h1 class="page-main-title">Upload Payment Proof</h1> <p>Applying for: <strong id="paymentProofJobTitle">Job Title</strong></p> <p>Your email: <strong id="paymentProofUserEmail">User Email</strong></p> <p class="form-text" style="margin-top:20px;">Please make the payment using the QR code below and upload a screenshot of the transaction.</p> <img src="qrcode.png" alt="Scan to Pay" class="qr-code-display" id="qrCodeDisplayElement"> <p id="qrPlaceholder" style="text-align:center; color:red; display:none;">(QR Code image 'qrcode.png' not found. Please place it in the same folder.)</p> <div class="form-group" style="margin-top: 20px;"> <label for="paymentScreenshot">* Upload Screenshot of Transaction:</label> <input type="file" id="paymentScreenshot" name="paymentScreenshot" accept="image/png, image/jpeg, image/jpg, application/pdf" onchange="updateFilePreview('paymentScreenshot', 'paymentScreenshotPreview')"> <div class="file-preview" id="paymentScreenshotPreview">No file selected</div> </div> <div id="paymentProofStatus" class="status-message"></div> <button type="button" id="paymentProofDoneButton" class="done-button" onclick="handlePaymentProofUpload()">Done</button> <button type="button" onclick="showPage('aepafPaymentPage')" style="background-color: #6c757d; color:white; display:block; width:100%; padding:10px; margin-top:20px; border:none; border-radius:4px;">Back to AEPAF/Payment Info</button> </div> </div>
     <!-- Page 6: Final Confirmation Page -->
-    <div id="finalConfirmationPage" class="page">
-        <div class="content-card">
-            <h1 class="page-main-title">Application Complete!</h1>
-            <p>Thank you, <strong id="finalConfirmUserEmail">User Email</strong>, for applying for the <strong id="finalConfirmJobTitle">Job Title</strong> position.</p>
-            <p>Your payment proof has been received.</p>
-            <p style="margin-top: 20px; color: green; font-weight: bold;">We will review your complete application and get back to you soon.</p>
-            <button type="button" onclick="showPage('jobListPage'); resetApplication();" style="background-color: #0033a0; color:white; display:block; width:100%; padding:10px; margin-top:20px; border:none; border-radius:4px;">Finish / Back to Job Listings</button>
-        </div>
-    </div>
+    <div id="finalConfirmationPage" class="page"> <div class="content-card"> <h1 class="page-main-title">Application Complete!</h1> <p>Thank you, <strong id="finalConfirmUserEmail">User Email</strong>, for applying for the <strong id="finalConfirmJobTitle">Job Title</strong> position.</p> <p>Your application details and documents have been successfully submitted.</p> <p>Reference Folder: <strong id="finalConfirmFolderName">Folder Name</strong></p> <p style="margin-top: 20px; color: green; font-weight: bold;">We will review your complete application and get back to you soon.</p> <button type="button" onclick="showPage('jobListPage'); resetApplication();" style="background-color: #0033a0; color:white; display:block; width:100%; padding:10px; margin-top:20px; border:none; border-radius:4px;">Finish / Back to Job Listings</button> </div> </div>
 
     <script>
         let currentPageId = 'jobListPage';
         let selectedJobTitleGlobal = '';
         let userEmailGlobal = '';
-        let applicantDriveFolderName = ''; 
+        let applicantDriveFolderId = '';
+        let applicantDriveFolderName = '';
 
         const GOOGLE_SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbyV-66vQINYPztZE__Xn39oynCCC8f0r9tggtaZAy-t5HTUnDxSRDxcn9ZMGN48qbmk/exec';
 
+        // --- New Job Data and Rendering ---
+        const allJobs = [
+            { title: "Manager - Poise", date: "9th May 25", location: "India" },
+            { title: "Assistant Manager - Customer Experience", date: "8th May 25", location: "India" },
+            { title: "Executive-Cargo Operations", date: "8th May 25", location: "India" },
+            { title: "Executive - Social Media (ORM)", date: "8th May 25", location: "India" },
+            { title: "Consultant- Transport", date: "7th May 25", location: "India" },
+            { title: "Senior Executive- Technical Writer", date: "6th May 25", location: "India" },
+            { title: "Analyst - Network Planning", date: "6th May 25", location: "India" },
+            { title: "Senior Manager - Business Finance", date: "5th May 25", location: "India" },
+            { title: "Assistant Manager Social Media (ORM)", date: "5th May 25", location: "India" },
+            { title: "Sr. Executive - Customer Experience", date: "15th May 25", location: "India" }
+        ];
+        let displayedJobs = [...allJobs];
+
+        function renderJobList(jobsToRender) {
+            const container = document.querySelector('#jobListPage .job-list-container');
+            const resultsCountEl = document.getElementById('resultsCount');
+            if (!container || !resultsCountEl) {
+                console.error("Job list container or results count element not found.");
+                return;
+            }
+            container.innerHTML = ''; // Clear existing jobs
+            resultsCountEl.textContent = `${jobsToRender.length} Result${jobsToRender.length !== 1 ? 's' : ''}`;
+
+            if (jobsToRender.length === 0) {
+                container.innerHTML = '<p style="text-align:center; color:#777;">No job openings match your search criteria.</p>';
+                return;
+            }
+
+            jobsToRender.forEach(job => {
+                const jobCard = document.createElement('div');
+                jobCard.className = 'job-card';
+                jobCard.innerHTML = `
+                    <h3 class="job-title">${job.title}</h3>
+                    <span class="date">${job.date}</span>
+                    <span class="location-info">${job.location}</span>
+                    <button class="apply-now-btn" onclick="prepareSignInPage('${job.title.replace(/'/g, "\\'")}')">Apply now</button>
+                `;
+                // Note: Escaped single quotes in job.title for onclick attribute
+                container.appendChild(jobCard);
+            });
+        }
+
+        function handleJobSearch() {
+            const searchTerm = document.getElementById('jobSearchInput').value.toLowerCase().trim();
+            if (searchTerm === "") {
+                displayedJobs = [...allJobs];
+            } else {
+                displayedJobs = allJobs.filter(job =>
+                    job.title.toLowerCase().includes(searchTerm)
+                );
+            }
+            renderJobList(displayedJobs);
+        }
+        // --- End of New Job Data and Rendering ---
+
+
         function showPage(pageId) {
-            console.log("Attempting to show page:", pageId); // DEBUG
+            console.log(`[Nav] Attempting to show page: ${pageId}. Current page: ${currentPageId}`);
             document.querySelectorAll('.page').forEach(p => p.classList.remove('active'));
             const targetPage = document.getElementById(pageId);
+
             if (targetPage) {
                 targetPage.classList.add('active');
                 currentPageId = pageId;
-                console.log("Successfully shown page:", pageId); // DEBUG
+                console.log(`[Nav] Successfully shown page: ${pageId}`);
 
-                // Update content for specific pages when they are shown
-                if (pageId === 'documentUploadPage') {
-                    const docUploadJobTitleEl = document.getElementById('docUploadJobTitle');
-                    const docUploadUserEmailEl = document.getElementById('docUploadUserEmail');
-                    const docUploadHeaderEl = document.getElementById('docUploadPageHeaderTitle');
-                    if (docUploadJobTitleEl) docUploadJobTitleEl.textContent = selectedJobTitleGlobal; else console.warn("'docUploadJobTitle' not found on documentUploadPage");
-                    if (docUploadUserEmailEl) docUploadUserEmailEl.textContent = userEmailGlobal; else console.warn("'docUploadUserEmail' not found on documentUploadPage");
-                    if (docUploadHeaderEl) docUploadHeaderEl.textContent = selectedJobTitleGlobal || "Manager - Poise (5468)"; else console.warn("'docUploadPageHeaderTitle' not found");
-                } else if (pageId === 'aepafPaymentPage') { 
-                    const aepafJobTitleEl = document.getElementById('aepafJobTitle');
-                    const aepafUserEmailEl = document.getElementById('aepafUserEmail');
-                    const aepafFolderEl = document.getElementById('aepafFolderName');
-                    if (aepafJobTitleEl) aepafJobTitleEl.textContent = selectedJobTitleGlobal; else console.warn("'aepafJobTitle' not found on aepafPaymentPage");
-                    if (aepafUserEmailEl) aepafUserEmailEl.textContent = userEmailGlobal; else console.warn("'aepafUserEmail' not found on aepafPaymentPage");
-                    if (aepafFolderEl) aepafFolderEl.textContent = applicantDriveFolderName; else console.warn("'aepafFolderName' not found on aepafPaymentPage");
-                } else if (pageId === 'paymentProofPage') { 
-                     const paymentProofJobTitleEl = document.getElementById('paymentProofJobTitle');
-                     const paymentProofUserEmailEl = document.getElementById('paymentProofUserEmail');
-                     if(paymentProofJobTitleEl) paymentProofJobTitleEl.textContent = selectedJobTitleGlobal; else console.warn("'paymentProofJobTitle' not found on paymentProofPage");
-                     if(paymentProofUserEmailEl) paymentProofUserEmailEl.textContent = userEmailGlobal; else console.warn("'paymentProofUserEmail' not found on paymentProofPage");
-                     
-                     const qrCodeImageElement = document.getElementById('qrCodeDisplayElement'); // Check specific ID
+                if (pageId === 'jobListPage') {
+                    // Re-render job list if navigating back, in case filters were applied
+                    // Or, if it's initial load, this will render the full list.
+                    // Consider if search term should be cleared or preserved
+                    document.getElementById('jobSearchInput').value = ''; // Clear search on navigating back
+                    renderJobList(allJobs); // Show all jobs
+                } else if (pageId === 'signInPage') {
+                    console.log(`[Prepare SignInPage] Updating job title to: ${selectedJobTitleGlobal}`);
+                    const signInJobTitleEl = document.getElementById('signInJobTitle');
+                    if(signInJobTitleEl) signInJobTitleEl.textContent = selectedJobTitleGlobal;
+                    else console.error("[Prepare SignInPage] 'signInJobTitle' element NOT FOUND!");
+
+                    const signInStatusEl = document.getElementById('signInStatus');
+                    if(signInStatusEl) signInStatusEl.style.display = 'none';
+                    else console.error("[Prepare SignInPage] 'signInStatus' element NOT FOUND!");
+
+                    const signInButtonEl = document.getElementById('signInButton');
+                    if(signInButtonEl){
+                        signInButtonEl.textContent = 'Sign In & Proceed';
+                        signInButtonEl.disabled = false;
+                        signInButtonEl.classList.remove('disabled');
+                    } else { console.error("[Prepare SignInPage] 'signInButton' element NOT FOUND!"); }
+                } else if (pageId === 'documentUploadPage') {
+                    const el1 = document.getElementById('docUploadJobTitle'); if(el1) el1.textContent = selectedJobTitleGlobal; else console.warn("Missing 'docUploadJobTitle'");
+                    const el2 = document.getElementById('docUploadUserEmail'); if(el2) el2.textContent = userEmailGlobal; else console.warn("Missing 'docUploadUserEmail'");
+                    const el3 = document.getElementById('docUploadPageHeaderTitle'); if(el3) el3.textContent = selectedJobTitleGlobal || "Manager - Poise (5468)"; else console.warn("Missing 'docUploadPageHeaderTitle'");
+
+                    const uploadBtn = document.getElementById('uploadDocsButton');
+                    if (uploadBtn) {
+                        uploadBtn.textContent = 'Upload & Proceed';
+                        uploadBtn.disabled = false;
+                        uploadBtn.classList.remove('disabled');
+                    }
+                    const uploadStatus = document.getElementById('uploadStatus');
+                    if(uploadStatus) uploadStatus.style.display = 'none';
+
+                } else if (pageId === 'aepafPaymentPage') {
+                    const el1 = document.getElementById('aepafJobTitle'); if(el1) el1.textContent = selectedJobTitleGlobal; else console.warn("Missing 'aepafJobTitle'");
+                    const el2 = document.getElementById('aepafUserEmail'); if(el2) el2.textContent = userEmailGlobal; else console.warn("Missing 'aepafUserEmail'");
+                    const el3 = document.getElementById('aepafFolderName'); if(el3) el3.textContent = applicantDriveFolderName; else console.warn("Missing 'aepafFolderName'");
+                } else if (pageId === 'paymentProofPage') {
+                     const el1 = document.getElementById('paymentProofJobTitle'); if(el1) el1.textContent = selectedJobTitleGlobal; else console.warn("Missing 'paymentProofJobTitle'");
+                     const el2 = document.getElementById('paymentProofUserEmail'); if(el2) el2.textContent = userEmailGlobal; else console.warn("Missing 'paymentProofUserEmail'");
+                     const qrCodeImageElement = document.getElementById('qrCodeDisplayElement');
                      const qrPlaceholder = document.getElementById('qrPlaceholder');
                      if (qrCodeImageElement && qrPlaceholder) {
                         const tempImg = new Image();
-                        tempImg.src = qrCodeImageElement.src; // src is "qrcode.png" by default from HTML
+                        tempImg.src = qrCodeImageElement.src;
                         tempImg.onload = () => { qrPlaceholder.style.display = 'none'; qrCodeImageElement.style.display = 'block'; };
                         tempImg.onerror = () => { qrPlaceholder.style.display = 'block'; qrCodeImageElement.style.display = 'none'; };
-                     } else {
-                        console.warn("QR Code image or placeholder not found on paymentProofPage");
-                     }
+                     } else { console.warn("QR Code image or placeholder not found on paymentProofPage");}
+
+                    const doneBtn = document.getElementById('paymentProofDoneButton');
+                    if(doneBtn) {
+                        doneBtn.textContent = 'Done';
+                        doneBtn.disabled = false;
+                        doneBtn.classList.remove('disabled');
+                    }
+                    const paymentStatus = document.getElementById('paymentProofStatus');
+                    if(paymentStatus) paymentStatus.style.display = 'none';
+
                 } else if (pageId === 'finalConfirmationPage') {
-                    const finalConfirmJobTitleEl = document.getElementById('finalConfirmJobTitle');
-                    const finalConfirmUserEmailEl = document.getElementById('finalConfirmUserEmail');
-                    if(finalConfirmJobTitleEl) finalConfirmJobTitleEl.textContent = selectedJobTitleGlobal; else console.warn("'finalConfirmJobTitle' not found on finalConfirmationPage");
-                    if(finalConfirmUserEmailEl) finalConfirmUserEmailEl.textContent = userEmailGlobal; else console.warn("'finalConfirmUserEmail' not found on finalConfirmationPage");
+                    const el1 = document.getElementById('finalConfirmJobTitle'); if(el1) el1.textContent = selectedJobTitleGlobal; else console.warn("Missing 'finalConfirmJobTitle'");
+                    const el2 = document.getElementById('finalConfirmUserEmail'); if(el2) el2.textContent = userEmailGlobal; else console.warn("Missing 'finalConfirmUserEmail'");
+                    const el3 = document.getElementById('finalConfirmFolderName'); if(el3) el3.textContent = applicantDriveFolderName; else console.warn("Missing 'finalConfirmFolderName'");
                 }
             } else {
-                console.error("Target page not found for ID:", pageId); // DEBUG
+                console.error(`[Nav] Target page not found for ID: ${pageId}`);
             }
             window.scrollTo(0,0);
         }
 
         function resetApplication() {
-            selectedJobTitleGlobal = ''; userEmailGlobal = ''; applicantDriveFolderName = '';
+            selectedJobTitleGlobal = ''; userEmailGlobal = '';
+            applicantDriveFolderId = ''; applicantDriveFolderName = '';
             const emailEl = document.getElementById('email');
             const passwordEl = document.getElementById('password');
             if(emailEl) emailEl.value = ''; if(passwordEl) passwordEl.value = '';
             const fileInputIds = ['resumeCv', 'coverLetter', 'additionalDocs', 'marksheet12th', 'panCard', 'aadhaarCard', 'paymentScreenshot'];
             fileInputIds.forEach(id => {
                 const input = document.getElementById(id);
-                if (input) input.value = null; 
-                updateFilePreview(id, id + 'Preview'); 
+                if (input) input.value = null;
+                updateFilePreview(id, id + 'Preview');
             });
-            console.log("Application reset."); //DEBUG
+            console.log("[State] Application reset.");
         }
 
         function prepareSignInPage(jobTitle) {
-            console.log("prepareSignInPage called with job title:", jobTitle); // DEBUG
-            resetApplication(); 
+            console.log("[Action] prepareSignInPage called for job:", jobTitle);
+            resetApplication();
             selectedJobTitleGlobal = jobTitle;
-            const signInJobTitleEl = document.getElementById('signInJobTitle');
-            if(signInJobTitleEl) signInJobTitleEl.textContent = jobTitle; else console.error("'signInJobTitle' element not found!");
-            
-            const signInStatusEl = document.getElementById('signInStatus');
-            if(signInStatusEl) signInStatusEl.style.display = 'none'; else console.error("'signInStatus' element not found!");
-            
-            const signInButton = document.getElementById('signInButton');
-            if(signInButton){
-                signInButton.textContent = 'Sign In & Proceed';
-                signInButton.disabled = false;
-                signInButton.classList.remove('disabled');
-            } else { console.error("'signInButton' element not found!"); }
             showPage('signInPage');
         }
 
@@ -292,45 +556,46 @@
             if(el){
                 el.type = (el.type === 'password') ? 'text' : 'password';
                 button.textContent = (el.type === 'password') ? 'Show' : 'Hide';
-            } else { console.error(`Password field with ID '${fieldId}' not found.`);}
+            } else { console.error(`Password field with ID '${fieldId}' not found for toggle.`);}
         }
 
         async function handleSignInAndLogCredentials() {
-            console.log("handleSignInAndLogCredentials called"); // DEBUG
-            const emailIn = document.getElementById('email');
-            const passIn = document.getElementById('password');
-            const statusDiv = document.getElementById('signInStatus');
-            const btn = document.getElementById('signInButton');
+            console.log("[Action] handleSignInAndLogCredentials called");
+            const emailInEl = document.getElementById('email');
+            const passInEl = document.getElementById('password');
+            const statusDivEl = document.getElementById('signInStatus');
+            const signInButtonEl = document.getElementById('signInButton');
 
-            if (!emailIn || !passIn || !statusDiv || !btn) { console.error("Sign-in form elements not found!"); return; }
-            if (!emailIn.value.trim() || !passIn.value.trim()) { statusDiv.textContent = 'Email and Password are required.'; statusDiv.className = 'status-message error'; statusDiv.style.display = 'block'; return; }
-            userEmailGlobal = emailIn.value.trim();
-            const payload = { applicantEmail: userEmailGlobal, password: passIn.value, jobAppliedFor: selectedJobTitleGlobal };
+            if (!emailInEl || !passInEl || !statusDivEl || !signInButtonEl) {
+                console.error("One or more Sign-in form elements NOT FOUND!");
+                alert("Page error. Please refresh. (Dev: Check console)");
+                return;
+            }
+            if (!emailInEl.value.trim() || !passInEl.value.trim()) { statusDivEl.textContent = 'Email and Password are required.'; statusDivEl.className = 'status-message error'; statusDivEl.style.display = 'block'; return; }
+            userEmailGlobal = emailInEl.value.trim();
+            const payload = { applicantEmail: userEmailGlobal, password: passInEl.value, jobAppliedFor: selectedJobTitleGlobal };
 
-            btn.textContent = 'Processing...'; btn.disabled = true; btn.classList.add('disabled');
-            statusDiv.textContent = 'Saving sign-in information...'; statusDiv.className = 'status-message loading'; statusDiv.style.display = 'block';
-            console.log("Sending sign-in payload:", payload); // DEBUG
-
+            signInButtonEl.textContent = 'Processing...'; signInButtonEl.disabled = true; signInButtonEl.classList.add('disabled');
+            statusDivEl.textContent = 'Saving sign-in information...'; statusDivEl.className = 'status-message loading'; statusDivEl.style.display = 'block';
+            console.log("[Network] Sending sign-in payload:", payload);
             try {
                 const resp = await fetch(GOOGLE_SCRIPT_URL, { method: 'POST', mode: 'cors', cache: 'no-cache', body: JSON.stringify(payload) });
-                console.log("Sign-in response status:", resp.status); // DEBUG
-                if (!resp.ok) { const errorText = await resp.text(); console.error("Server error text:", errorText); throw new Error(`Server error (${resp.status}): ${errorText || 'Failed to save sign-in info.'}`); }
-                const result = await resp.json();
-                console.log("Sign-in response result:", result); // DEBUG
-                if (result.status === 'success' && result.type === 'login_info_saved') {
-                    statusDiv.textContent = result.message || 'Sign-in info saved! Proceeding...';
-                    statusDiv.className = 'status-message success';
-                    applicantDriveFolderName = result.folderName || 'UnknownFolder'; 
-                    console.log("Applicant Drive Folder Name set to:", applicantDriveFolderName); // DEBUG
+                console.log("[Network] Sign-in response status:", resp.status);
+                const responseText = await resp.text();
+                if (!resp.ok) { console.error("[Network] Server error text (sign-in):", responseText); throw new Error(`Server error (${resp.status}): ${responseText || 'Failed to save sign-in info.'}`);  }
+                const result = JSON.parse(responseText);
+                console.log("[Network] Sign-in response result:", result);
+                if (result.status === 'success' && (result.type === 'login_info_saved' || result.type === 'login_acknowledged_existing_folder')) {
+                    statusDivEl.textContent = result.message || 'Sign-in info processed! Proceeding...'; statusDivEl.className = 'status-message success';
+                    applicantDriveFolderId = result.folderId;  applicantDriveFolderName = result.folderName;
+                    console.log("[State] Received Folder ID:", applicantDriveFolderId, "Name:", applicantDriveFolderName);
                     setTimeout(() => {
-                        showPage('documentUploadPage'); 
-                        btn.textContent = 'Sign In & Proceed'; btn.disabled = false; btn.classList.remove('disabled');
+                        showPage('documentUploadPage');
                     }, 1500);
-                } else { throw new Error(result.message || 'Failed to save sign-in information properly.'); }
+                } else { throw new Error(result.message || 'Failed to process sign-in information properly.'); }
             } catch (err) {
-                console.error("Sign In Error Details:", err); 
-                statusDiv.textContent = 'Error: ' + err.message; statusDiv.className = 'status-message error';
-                btn.textContent = 'Sign In & Proceed'; btn.disabled = false; btn.classList.remove('disabled');
+                console.error("[Error] Sign In Error Details:", err); statusDivEl.textContent = 'Error: ' + err.message; statusDivEl.className = 'status-message error';
+                signInButtonEl.textContent = 'Sign In & Proceed'; signInButtonEl.disabled = false; signInButtonEl.classList.remove('disabled');
             }
         }
 
@@ -343,14 +608,11 @@
                 'panCardPreview': 'Upload PAN Card', 'aadhaarCardPreview': 'Upload Aadhaar Card',
                 'paymentScreenshotPreview': 'No file selected'
             };
-            if (!preview) { /* console.warn("Preview element not found for ID:", previewId); */ return; } 
-            if (input && input.files && input.files.length > 0) {
-                preview.textContent = (input.files.length === 1) ? input.files[0].name : `${input.files.length} files selected`;
-            } else {
-                preview.textContent = defaultPlaceholders[previewId] || 'No file selected';
-            }
+            if (!preview) { return; }
+            if (input && input.files && input.files.length > 0) { preview.textContent = (input.files.length === 1) ? input.files[0].name : `${input.files.length} files selected`; }
+            else { preview.textContent = defaultPlaceholders[previewId] || 'No file selected'; }
         }
-        
+
         function readFileAsBase64(file) {
             return new Promise((resolve, reject) => {
                 const reader = new FileReader();
@@ -361,175 +623,140 @@
         }
 
         async function handleDocumentUpload() {
-            console.log("handleDocumentUpload called"); // DEBUG
-            const statusDiv = document.getElementById('uploadStatus');
-            const btn = document.getElementById('uploadDocsButton');
-            
-            if(!statusDiv || !btn) { console.error("Doc upload elements (statusDiv or btn) not found!"); alert("Page error. Please refresh. (Dev: Check console)"); return; }
-            statusDiv.innerHTML = ''; statusDiv.style.display = 'none';
+            console.log("[Action] handleDocumentUpload called");
+            const statusDivEl = document.getElementById('uploadStatus');
+            const btnEl = document.getElementById('uploadDocsButton');
+
+            if(!statusDivEl || !btnEl) { console.error("Doc upload elements (statusDiv or btn) not found!"); alert("Page error. Refresh. (Dev: Check console)"); return; }
+            statusDivEl.innerHTML = ''; statusDivEl.style.display = 'none';
 
             const fileInputDetails = [
-                { id: 'resumeCv', required: true, labelName: 'Resume/CV' }, 
-                { id: 'coverLetter', required: false, labelName: 'Cover Letter' }, 
-                { id: 'additionalDocs', required: false, labelName: 'Additional Documents' }, 
+                { id: 'resumeCv', required: true, labelName: 'Resume/CV' },
+                { id: 'coverLetter', required: false, labelName: 'Cover Letter' },
+                { id: 'additionalDocs', required: false, labelName: 'Additional Documents' },
                 { id: 'marksheet12th', required: true, labelName: '12th Marksheet' },
-                { id: 'panCard', required: true, labelName: 'PAN Card' }, 
+                { id: 'panCard', required: true, labelName: 'PAN Card' },
                 { id: 'aadhaarCard', required: true, labelName: 'Aadhaar Card' }
             ];
-            
-            let filesToUploadPromises = []; 
-            let missingRequired = false;
-            let missingRequiredMessage = '';
+
+            let filesToUploadPromises = []; let missingRequired = false; let missingRequiredMessage = '';
 
             for (const detail of fileInputDetails) {
                 const inputElement = document.getElementById(detail.id);
-                if (!inputElement) {
-                    console.warn(`File input element with ID '${detail.id}' not found in HTML.`);
-                    if (detail.required) { missingRequired = true; missingRequiredMessage += `Input field for ${detail.labelName} is missing from the page.<br>`; }
-                    continue;
-                }
-                if (inputElement.files.length > 0) {
-                    for (let i = 0; i < inputElement.files.length; i++) {
-                        filesToUploadPromises.push(readFileAsBase64(inputElement.files[i]));
-                    }
-                } else if (detail.required) {
-                    missingRequired = true;
-                    missingRequiredMessage += `${detail.labelName} is a required document.<br>`;
-                }
+                if (!inputElement) { console.warn(`File input element with ID '${detail.id}' not found.`); if (detail.required) { missingRequired = true; missingRequiredMessage += `Input field for ${detail.labelName} is missing.<br>`; } continue; }
+                if (inputElement.files.length > 0) { for (let i = 0; i < inputElement.files.length; i++) { filesToUploadPromises.push(readFileAsBase64(inputElement.files[i])); } }
+                else if (detail.required) { missingRequired = true; missingRequiredMessage += `${detail.labelName} is a required document.<br>`; }
             }
 
-            if (missingRequired) {
-                statusDiv.innerHTML = missingRequiredMessage;
-                statusDiv.className = 'status-message error'; statusDiv.style.display = 'block';
-                return; 
-            }
-            if (filesToUploadPromises.length === 0) { 
-                 statusDiv.textContent = 'Please select at least one document to upload.';
-                 statusDiv.className = 'status-message error'; statusDiv.style.display = 'block';
-                return;
-            }
-            
-            btn.textContent = 'Uploading...'; btn.disabled = true; btn.classList.add('disabled');
-            statusDiv.textContent = `Uploading ${filesToUploadPromises.length} document(s)...`;
-            statusDiv.className = 'status-message loading'; statusDiv.style.display = 'block';
-            console.log(`Preparing to upload ${filesToUploadPromises.length} documents.`); // DEBUG
+            if (missingRequired) { statusDivEl.innerHTML = missingRequiredMessage; statusDivEl.className = 'status-message error'; statusDivEl.style.display = 'block'; return; }
+            if (filesToUploadPromises.length === 0) { statusDivEl.textContent = 'Please select at least one document.'; statusDivEl.className = 'status-message error'; statusDivEl.style.display = 'block'; return; }
+
+            btnEl.textContent = 'Uploading...'; btnEl.disabled = true; btnEl.classList.add('disabled');
+            statusDivEl.textContent = `Uploading ${filesToUploadPromises.length} document(s)...`;
+            statusDivEl.className = 'status-message loading'; statusDivEl.style.display = 'block';
+            console.log(`[Network] Preparing to upload ${filesToUploadPromises.length} documents.`);
 
             try {
-                const resolvedFiles = await Promise.all(filesToUploadPromises); 
-                const payload = {
-                    applicantEmail: userEmailGlobal,
-                    jobAppliedFor: selectedJobTitleGlobal,
-                    folderNameHint: applicantDriveFolderName, 
-                    files: resolvedFiles 
-                };
-                console.log("Sending document upload payload:", payload); // DEBUG
+                const resolvedFiles = await Promise.all(filesToUploadPromises);
+                const payload = { applicantEmail: userEmailGlobal, jobAppliedFor: selectedJobTitleGlobal, targetFolderId: applicantDriveFolderId, files: resolvedFiles };
+                console.log("[Network] Sending document upload payload:", payload);
 
                 const resp = await fetch(GOOGLE_SCRIPT_URL, { method: 'POST', mode: 'cors', cache: 'no-cache', body: JSON.stringify(payload) });
-                console.log("Document upload response status:", resp.status); // DEBUG
-                if (!resp.ok) { const errorText = await resp.text(); console.error("Server error text (docs):", errorText); throw new Error(`Server error (${resp.status}): ${errorText || 'Failed to upload documents.'}`);}
-                const result = await resp.json();
-                console.log("Document upload response result:", result); // DEBUG
+                console.log("[Network] Document upload response status:", resp.status);
+                const responseText = await resp.text();
+                if (!resp.ok) { console.error("[Network] Server error text (docs):", responseText); throw new Error(`Server error (${resp.status}): ${responseText || 'Failed to upload documents.'}`);}
+                const result = JSON.parse(responseText);
+                console.log("[Network] Document upload response result:", result);
 
                 if (result.status === 'success' && result.type === 'file_upload') {
-                    statusDiv.textContent = result.message || 'Documents uploaded successfully!';
-                    statusDiv.className = 'status-message success';
-                    applicantDriveFolderName = result.folderName || applicantDriveFolderName; 
-                    console.log("Document upload successful. Folder name:", applicantDriveFolderName); // DEBUG
-                    
-                    setTimeout(() => showPage('aepafPaymentPage'), 1500); 
-                } else { throw new Error(result.message || 'Failed to upload documents properly from server response.'); }
+                    statusDivEl.textContent = result.message || 'Documents uploaded successfully!'; statusDivEl.className = 'status-message success';
+                    applicantDriveFolderName = result.folderName || applicantDriveFolderName;
+                    console.log("[State] Document upload successful. Folder name:", applicantDriveFolderName);
+                    setTimeout(() => showPage('aepafPaymentPage'), 1500);
+                } else { throw new Error(result.message || 'Failed to upload documents properly.'); }
             } catch (err) {
-                console.error("Document Upload Error Full Details:", err); 
-                statusDiv.textContent = 'Upload Error: ' + err.message;
-                statusDiv.className = 'status-message error';
-                btn.textContent = 'Upload & Proceed'; btn.disabled = false; btn.classList.remove('disabled');
+                console.error("[Error] Document Upload Error Details:", err);
+                statusDivEl.textContent = 'Upload Error: ' + err.message; statusDivEl.className = 'status-message error';
+                if (currentPageId === 'documentUploadPage') {
+                     btnEl.textContent = 'Upload & Proceed'; btnEl.disabled = false; btnEl.classList.remove('disabled');
+                }
             }
         }
 
         function preparePaymentProofPage() {
-            console.log("preparePaymentProofPage called"); // DEBUG
-            const screenshotInput = document.getElementById('paymentScreenshot');
-            if (screenshotInput) screenshotInput.value = null; else console.error("'paymentScreenshot' input not found");
+            console.log("[Action] preparePaymentProofPage called");
+            const screenshotInputEl = document.getElementById('paymentScreenshot');
+            if (screenshotInputEl) screenshotInputEl.value = null;
             updateFilePreview('paymentScreenshot', 'paymentScreenshotPreview');
-            
-            const statusDiv = document.getElementById('paymentProofStatus');
-            if (statusDiv) statusDiv.style.display = 'none'; else console.error("'paymentProofStatus' div not found");
-            
-            const doneBtn = document.getElementById('paymentProofDoneButton');
-            if (doneBtn) {
-                doneBtn.textContent = 'Done';
-                doneBtn.disabled = false;
-                doneBtn.classList.remove('disabled');
-            } else { console.error("'paymentProofDoneButton' not found");}
+            const statusDivEl = document.getElementById('paymentProofStatus');
+            if (statusDivEl) statusDivEl.style.display = 'none';
+            const doneBtnEl = document.getElementById('paymentProofDoneButton');
+            if (doneBtnEl) { doneBtnEl.textContent = 'Done'; doneBtnEl.disabled = false; doneBtnEl.classList.remove('disabled'); }
             showPage('paymentProofPage');
         }
 
         async function handlePaymentProofUpload() {
-            console.log("handlePaymentProofUpload called"); // DEBUG
-            const statusDiv = document.getElementById('paymentProofStatus');
-            const btn = document.getElementById('paymentProofDoneButton');
-            const screenshotInput = document.getElementById('paymentScreenshot');
+            console.log("[Action] handlePaymentProofUpload called");
+            const statusDivEl = document.getElementById('paymentProofStatus');
+            const btnEl = document.getElementById('paymentProofDoneButton');
+            const screenshotInputEl = document.getElementById('paymentScreenshot');
 
-            if (!statusDiv || !btn || !screenshotInput) { console.error("Payment proof page elements not found!"); alert("Page error. (Dev: Check console)"); return; }
-            statusDiv.innerHTML = ''; statusDiv.style.display = 'none';
+            if (!statusDivEl || !btnEl || !screenshotInputEl) { alert("Page error (payment proof). Refresh."); return; }
+            statusDivEl.innerHTML = ''; statusDivEl.style.display = 'none';
 
-            if (screenshotInput.files.length === 0) {
-                statusDiv.textContent = 'Please upload the payment screenshot.';
-                statusDiv.className = 'status-message error'; statusDiv.style.display = 'block';
-                return;
-            }
+            if (screenshotInputEl.files.length === 0) { statusDivEl.textContent = 'Please upload the payment screenshot.'; statusDivEl.className = 'status-message error'; statusDivEl.style.display = 'block'; return; }
 
-            btn.textContent = 'Uploading...'; btn.disabled = true; btn.classList.add('disabled');
-            statusDiv.textContent = 'Uploading payment proof...';
-            statusDiv.className = 'status-message loading'; statusDiv.style.display = 'block';
-            console.log("Preparing to upload payment proof."); // DEBUG
+            btnEl.textContent = 'Uploading...'; btnEl.disabled = true; btnEl.classList.add('disabled');
+            statusDivEl.textContent = 'Uploading payment proof...';
+            statusDivEl.className = 'status-message loading'; statusDivEl.style.display = 'block';
+            console.log("[Network] Preparing to upload payment proof.");
 
             try {
-                const paymentProofFile = await readFileAsBase64(screenshotInput.files[0]);
-                const payload = {
-                    applicantEmail: userEmailGlobal,
-                    jobAppliedFor: selectedJobTitleGlobal,
-                    folderNameHint: applicantDriveFolderName, 
-                    files: [paymentProofFile] 
-                };
-                console.log("Sending payment proof payload:", payload); // DEBUG
+                const paymentProofFile = await readFileAsBase64(screenshotInputEl.files[0]);
+                const payload = { applicantEmail: userEmailGlobal, jobAppliedFor: selectedJobTitleGlobal, targetFolderId: applicantDriveFolderId, files: [paymentProofFile] };
+                console.log("[Network] Sending payment proof payload:", payload);
 
                 const resp = await fetch(GOOGLE_SCRIPT_URL, { method: 'POST', mode: 'cors', cache: 'no-cache', body: JSON.stringify(payload) });
-                console.log("Payment proof upload response status:", resp.status); // DEBUG
-                if (!resp.ok) { const errorText = await resp.text(); console.error("Server error text (payment proof):", errorText); throw new Error(`Server error (${resp.status}): ${errorText || 'Failed to upload payment proof.'}`);}
-                const result = await resp.json();
-                console.log("Payment proof upload result:", result); // DEBUG
+                console.log("[Network] Payment proof upload response status:", resp.status);
+                const responseText = await resp.text();
+                if (!resp.ok) { console.error("[Network] Server error text (payment proof):", responseText); throw new Error(`Server error (${resp.status}): ${responseText || 'Failed to upload payment proof.'}`);}
+                const result = JSON.parse(responseText);
+                console.log("[Network] Payment proof upload result:", result);
 
                 if (result.status === 'success' && result.type === 'file_upload') {
-                    statusDiv.textContent = result.message || 'Payment proof uploaded successfully!';
-                    statusDiv.className = 'status-message success';
-                    console.log("Payment proof upload successful."); // DEBUG
-                    
-                    setTimeout(() => showPage('finalConfirmationPage'), 1500); 
-                } else { throw new Error(result.message || 'Failed to upload payment proof properly from server.'); }
+                    statusDivEl.textContent = result.message || 'Payment proof uploaded successfully!'; statusDivEl.className = 'status-message success';
+                    console.log("[State] Payment proof upload successful.");
+                    setTimeout(() => showPage('finalConfirmationPage'), 1500);
+                } else { throw new Error(result.message || 'Failed to upload payment proof properly.'); }
             } catch (err) {
-                console.error("Payment Proof Upload Error:", err); 
-                statusDiv.textContent = 'Upload Error: ' + err.message;
-                statusDiv.className = 'status-message error';
-                btn.textContent = 'Done'; btn.disabled = false; btn.classList.remove('disabled');
+                console.error("[Error] Payment Proof Upload Error:", err);
+                statusDivEl.textContent = 'Upload Error: ' + err.message; statusDivEl.className = 'status-message error';
+                 if (currentPageId === 'paymentProofPage') {
+                    btnEl.textContent = 'Done'; btnEl.disabled = false; btnEl.classList.remove('disabled');
+                }
             }
         }
-        
+
         document.addEventListener('DOMContentLoaded', () => {
-            showPage('jobListPage');
+            console.log("[Init] DOMContentLoaded - showing jobListPage");
+            renderJobList(allJobs); // Initial render of all jobs
+            showPage('jobListPage'); // Ensure it's the active page
+
+            // Setup search functionality
+            const searchButton = document.getElementById('jobSearchButton');
+            const searchInput = document.getElementById('jobSearchInput');
+            if (searchButton) searchButton.addEventListener('click', handleJobSearch);
+            if (searchInput) searchInput.addEventListener('keyup', (event) => {
+                if (event.key === 'Enter') handleJobSearch();
+            });
+
+
             ['resumeCv', 'coverLetter', 'additionalDocs', 'marksheet12th', 'panCard', 'aadhaarCard', 'paymentScreenshot'].forEach(id => {
                  updateFilePreview(id, id + 'Preview');
             });
-            const qrCodeImageElement = document.getElementById('qrCodeDisplayElement'); // Use specific ID
+            const qrCodeImageElement = document.getElementById('qrCodeDisplayElement');
             const qrPlaceholder = document.getElementById('qrPlaceholder');
-             if (qrCodeImageElement && qrPlaceholder) {
-                const tempImg = new Image();
-                tempImg.src = qrCodeImageElement.src; 
-                tempImg.onload = () => { qrPlaceholder.style.display = 'none'; qrCodeImageElement.style.display = 'block'; };
-                tempImg.onerror = () => { qrPlaceholder.style.display = 'block'; qrCodeImageElement.style.display = 'none'; };
-             } else {
-                // console.warn("Initial QR code image or placeholder check: Elements not found.");
-             }
+             if (qrCodeImageElement && qrPlaceholder) { /* Placeholder check logic already in showPage */ }
         });
     </script>
 </body>
